@@ -10,9 +10,8 @@ function normalizeSiteUrl(value: string | undefined): string {
 
   try {
     const parsed = new URL(value);
-    if (parsed.hostname.startsWith("www.")) {
-      parsed.hostname = parsed.hostname.slice(4);
-    }
+    const host = parsed.hostname.toLowerCase();
+    parsed.hostname = host.startsWith("www.") ? host.slice(4) : host;
     return parsed.origin;
   } catch {
     return DEFAULT_SITE_URL;

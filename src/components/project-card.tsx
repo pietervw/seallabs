@@ -67,6 +67,8 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
 }
 
 export function FeaturedWorkTeaser({ projects }: ProjectGridProps) {
+  if (projects.length === 0) return null;
+
   return (
     <section className="section" aria-labelledby="featured-work-heading">
       <div className="shell">

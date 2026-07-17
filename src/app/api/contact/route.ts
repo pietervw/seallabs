@@ -171,11 +171,16 @@ export async function POST(request: Request) {
 
   let sent = false;
   try {
-    sent =
-      (await sendViaSendGrid({ to, from, subject, text, replyTo: email })) ||
-      (await sendViaSmtp({ to, from, subject, text, replyTo: email }));
+    sent = await sendViaSendGrid({ to, from, subject, text, replyTo: email });
   } catch (err) {
-    console.error("[contact] send failed", err);
+    console.error("[contact] SendGrid failed", err);
+  }
+  if (!sent) {
+    try {
+      sent = await sendViaSmtp({ to, from, subject, text, replyTo: email });
+    } catch (err) {
+      console.error("[contact] SMTP failed", err);
+    }
   }
 
   if (!sent) {
