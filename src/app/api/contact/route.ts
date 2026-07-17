@@ -24,6 +24,11 @@ function fromAddress(from: string): string {
   return from.includes("<") ? from.replace(/^.*<([^>]+)>.*$/, "$1") : from;
 }
 
+/** Strip CR/LF so user input cannot inject SMTP/email headers. */
+function sanitizeHeaderValue(value: string): string {
+  return value.replace(/[\r\n]+/g, " ").trim();
+}
+
 async function verifyTurnstile(token: string, ip: string | null): Promise<boolean> {
   // Only enforce when both keys are present — avoids secret-only (breaks form)
   // and treats incomplete Turnstile config as disabled.
@@ -31,25 +36,30 @@ async function verifyTurnstile(token: string, ip: string | null): Promise<boolea
   if (!TURNSTILE_SECRET_KEY || !siteKey) return true;
   if (!token) return false;
 
-  const body = new URLSearchParams({
-    secret: TURNSTILE_SECRET_KEY,
-    response: token,
-  });
-  if (ip) body.set("remoteip", ip);
+  try {
+    const body = new URLSearchParams({
+      secret: TURNSTILE_SECRET_KEY,
+      response: token,
+    });
+    if (ip) body.set("remoteip", ip);
 
-  const response = await fetch(
-    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body,
-      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-    },
-  );
+    const response = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      },
+    );
 
-  if (!response.ok) return false;
-  const result = (await response.json()) as { success?: boolean };
-  return result.success === true;
+    if (!response.ok) return false;
+    const result = (await response.json()) as { success?: boolean };
+    return result.success === true;
+  } catch (err) {
+    console.error("[contact] Turnstile verify failed", err);
+    return false;
+  }
 }
 
 async function sendViaSendGrid(payload: {
@@ -124,9 +134,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const name = body.name?.trim() || "";
+  const name = sanitizeHeaderValue(body.name?.trim() || "");
   const email = body.email?.trim() || "";
-  const company = body.company?.trim() || "";
+  const company = sanitizeHeaderValue(body.company?.trim() || "");
   const message = body.message?.trim() || "";
 
   if (!name || name.length > 120) {

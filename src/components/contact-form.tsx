@@ -46,6 +46,12 @@ export function ContactForm() {
       node.dataset.rendered = "1";
     };
 
+    const onScriptError = () => {
+      if (cancelled) return;
+      setStatus("error");
+      setMessage("Security check failed to load. Please refresh and try again.");
+    };
+
     if (window.turnstile) {
       render();
       return () => {
@@ -63,11 +69,20 @@ export function ContactForm() {
       script.async = true;
       document.head.appendChild(script);
     }
+
     script.addEventListener("load", render);
+    script.addEventListener("error", onScriptError);
+    // If the script finished loading before this effect subscribed, `load` won't
+    // fire again — retry once on the next tick.
+    const retry = window.setTimeout(() => {
+      if (window.turnstile) render();
+    }, 0);
 
     return () => {
       cancelled = true;
+      window.clearTimeout(retry);
       script?.removeEventListener("load", render);
+      script?.removeEventListener("error", onScriptError);
     };
   }, []);
 
