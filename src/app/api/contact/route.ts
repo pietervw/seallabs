@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 import { SUPPORT_EMAIL, TURNSTILE_SECRET_KEY } from "@/lib/config";
+import { sendContactNotification } from "@/lib/pushover";
+import { TURNSTILE_SITE_KEY } from "@/lib/public-config";
 
 export const runtime = "nodejs";
 
@@ -32,11 +34,9 @@ function sanitizeHeaderValue(value: string): string {
 async function verifyTurnstile(token: string, ip: string | null): Promise<boolean> {
   // Only enforce when both keys are present — avoids secret-only (breaks form)
   // and treats incomplete Turnstile config as disabled.
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() || "";
-  if (!TURNSTILE_SECRET_KEY || !siteKey) return true;
-  // Fail open when the browser never produced a token (script blocked / failed).
-  // If a token is present it must verify successfully.
-  if (!token) return true;
+  if (!TURNSTILE_SECRET_KEY || !TURNSTILE_SITE_KEY) return true;
+  // When Turnstile is configured, require a token — otherwise API clients can bypass.
+  if (!token) return false;
 
   try {
     const body = new URLSearchParams({
@@ -204,6 +204,8 @@ export async function POST(request: Request) {
       { status: 503 },
     );
   }
+
+  void sendContactNotification({ name, email, company, message });
 
   return NextResponse.json({ ok: true });
 }

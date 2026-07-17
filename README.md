@@ -39,10 +39,31 @@ npm run dev
 
 ## Deploy (Coolify / Docker)
 
-1. Set build-time `NEXT_PUBLIC_*` vars (especially `NEXT_PUBLIC_SITE_URL=https://seallabs.io`).
-2. Set runtime secrets: `SENDGRID_API_KEY` (or SMTP_*), optional `TURNSTILE_SECRET_KEY`.
-3. Health check: `GET /api/health`.
-4. Point DNS apex `seallabs.io` at the deploy; redirect `www` is handled in `next.config.ts`.
+Root `Dockerfile` + `output: "standalone"` in `next.config.ts`. Deploy a branch that includes the Dockerfile (not the empty Create-Next-App `master` commit).
+
+### Coolify resource settings
+
+| Setting | Value |
+| --- | --- |
+| Build Pack | Dockerfile |
+| Dockerfile location | `/Dockerfile` |
+| Ports Exposes | `3000` |
+| Health Check Path | `/api/health` |
+| Health Check Port | `3000` |
+
+### Environment
+
+1. **Build-time** `NEXT_PUBLIC_*` vars (especially `NEXT_PUBLIC_SITE_URL=https://seallabs.io`) — inlined at `next build`.
+2. **Runtime** secrets: `SENDGRID_API_KEY` (or SMTP_*), optional `TURNSTILE_SECRET_KEY`, optional `PUSHOVER_API_TOKEN` + `PUSHOVER_USER_KEY`.
+3. Point DNS apex `seallabs.io` at the deploy; `www` → apex redirect is in `next.config.ts`.
+
+Local image check (requires Docker Engine, not the npm `docker` stub):
+
+```bash
+docker build -t seallabs --build-arg NEXT_PUBLIC_SITE_URL=https://seallabs.io .
+docker run --rm -p 3000:3000 --env-file .env.local seallabs
+curl -s http://127.0.0.1:3000/api/health
+```
 
 ## Contact form
 

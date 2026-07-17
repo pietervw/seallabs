@@ -45,6 +45,9 @@ export const GA_MEASUREMENT_ID = resolveGaMeasurementId();
 
 export const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY?.trim() || "";
 
+export const PUSHOVER_API_TOKEN = process.env.PUSHOVER_API_TOKEN?.trim() || "";
+export const PUSHOVER_USER_KEY = process.env.PUSHOVER_USER_KEY?.trim() || "";
+
 export function absoluteUrl(path: string = "/"): string {
   if (!path || path === "/") return `${SITE_URL}/`;
   return path.startsWith("/") ? `${SITE_URL}${path}` : `${SITE_URL}/${path}`;

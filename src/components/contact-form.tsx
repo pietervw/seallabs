@@ -23,11 +23,13 @@ declare global {
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+const TURNSTILE_UNAVAILABLE =
+  "Security check unavailable. Please refresh or email us directly.";
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
-  const [turnstileReady, setTurnstileReady] = useState(!TURNSTILE_SITE_KEY);
   const turnstileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,17 +47,12 @@ export function ContactForm() {
         "expired-callback": () => setTurnstileToken(""),
       });
       node.dataset.rendered = "1";
-      setTurnstileReady(true);
     };
 
     const onScriptError = () => {
       if (cancelled) return;
-      // Fail open so a blocked/unavailable script does not permanently brick the form.
-      setTurnstileReady(false);
       setStatus("error");
-      setMessage(
-        "Security check unavailable — you can still send, or email us directly.",
-      );
+      setMessage(TURNSTILE_UNAVAILABLE);
     };
 
     if (window.turnstile) {
@@ -97,9 +94,8 @@ export function ContactForm() {
 
     const form = event.currentTarget;
     const data = new FormData(form);
-    const requireToken = Boolean(TURNSTILE_SITE_KEY && turnstileReady);
 
-    if (requireToken && !turnstileToken) {
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
       setStatus("error");
       setMessage("Please complete the security check.");
       return;
@@ -115,7 +111,7 @@ export function ContactForm() {
           company: String(data.get("company") || ""),
           message: String(data.get("message") || ""),
           website: String(data.get("website") || ""),
-          turnstileToken: requireToken ? turnstileToken : "",
+          turnstileToken,
         }),
       });
 
@@ -187,7 +183,10 @@ export function ContactForm() {
       <button
         type="submit"
         className="btn btn--primary"
-        disabled={status === "submitting"}
+        disabled={
+          status === "submitting" ||
+          Boolean(TURNSTILE_SITE_KEY && !turnstileToken)
+        }
       >
         {status === "submitting" ? "sending…" : "./send"}
       </button>
