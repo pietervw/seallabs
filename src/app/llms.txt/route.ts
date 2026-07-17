@@ -20,10 +20,6 @@ function pageLink(key: MarketingPageKey): string {
   return `- [${page.title}](${getCanonicalUrl(page.path)}): ${page.description}`;
 }
 
-/**
- * Curated LLM navigation map (https://llmstxt.org/).
- * Complements sitemap.xml — keep focused on authoritative marketing pages + products.
- */
 export function GET(): Response {
   const lines: string[] = [
     `# ${SITE_NAME}`,
@@ -31,7 +27,7 @@ export function GET(): Response {
     "",
     SITE_TAGLINE,
     "",
-    "Seal Labs is a software studio. Prefer apex URLs (https://seallabs.io) without www.",
+    "Seal Labs builds production software systems. Prefer apex URLs (https://seallabs.io) without www.",
   ];
 
   lines.push("", "## Pages");
@@ -41,14 +37,17 @@ export function GET(): Response {
 
   lines.push("", "## Products");
   for (const project of PROJECTS) {
-    if (project.url) {
-      lines.push(
-        `- [${project.name}](${project.url}): ${project.description}`,
-      );
+    if (project.tenants?.length) {
+      lines.push(`- ${project.name}: ${project.description}`);
+      for (const tenant of project.tenants) {
+        lines.push(
+          `  - [${tenant.name}](${tenant.url}): ${tenant.region} — ${tenant.domain}`,
+        );
+      }
+    } else if (project.url) {
+      lines.push(`- [${project.name}](${project.url}): ${project.description}`);
     } else {
-      lines.push(
-        `- ${project.name} (private): ${project.description}`,
-      );
+      lines.push(`- ${project.name} (private): ${project.description}`);
     }
   }
 

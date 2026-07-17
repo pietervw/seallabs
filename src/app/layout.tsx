@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope } from "next/font/google";
+import { Orbitron, Share_Tech_Mono } from "next/font/google";
 import Script from "next/script";
 
 import {
@@ -16,37 +16,38 @@ import {
 
 import "./globals.css";
 
-const display = Fraunces({
+const display = Orbitron({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
   weight: ["500", "600", "700"],
 });
 
-const body = Manrope({
+const mono = Share_Tech_Mono({
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--font-mono",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: "400",
 });
 
 const ogImage = {
   url: absoluteUrl("/opengraph-image"),
   width: 1200,
   height: 630,
-  alt: `${SITE_NAME} — software studio`,
+  alt: `${SITE_NAME} — software systems`,
 };
 
 export const viewport: Viewport = {
-  themeColor: "#eef3f6",
+  themeColor: "#05080c",
   width: "device-width",
   initialScale: 1,
+  colorScheme: "dark",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Software studio for trustworthy SaaS`,
+    default: `${SITE_NAME} | Software systems`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -57,13 +58,11 @@ export const metadata: Metadata = {
   keywords: [
     "Seal Labs",
     "software studio",
-    "SaaS development",
+    "SaaS",
     "Next.js",
-    "multi-tenant platforms",
     "identity verification",
     "applicant tracking",
-    "field audit workflows",
-    "Perth software agency",
+    "field audit",
   ],
   formatDetection: {
     email: false,
@@ -89,18 +88,22 @@ export const metadata: Metadata = {
     locale: SITE_LOCALE,
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | Software studio for trustworthy SaaS`,
+    title: `${SITE_NAME} | Software systems`,
     description: SITE_DESCRIPTION,
     images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | Software studio for trustworthy SaaS`,
+    title: `${SITE_NAME} | Software systems`,
     description: SITE_DESCRIPTION,
     images: [ogImage.url],
   },
   icons: {
-    icon: [{ url: "/favicon.ico" }],
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [{ url: "/icon.png" }],
   },
 };
 
@@ -110,8 +113,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-AU" className={`${display.variable} ${body.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased">
+    <html lang="en-AU" className={`${display.variable} ${mono.variable} h-full`}>
+      <body className="min-h-full flex flex-col">
         <a href="#main" className="skip-link">
           Skip to content
         </a>

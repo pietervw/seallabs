@@ -23,40 +23,28 @@ export default function AboutPage() {
       <section className="section">
         <div className="shell">
           <div className="section__intro">
-            <p className="eyebrow">About</p>
-            <h1>A studio for durable software</h1>
+            <p className="eyebrow">whoami</p>
+            <h1>About</h1>
             <p className="lede">
-              Seal Labs builds products that need to earn trust — in schools,
-              hiring teams, clinics, field crews, and people checking an ID on
-              their phone.
+              Seal Labs builds production software — education, identity, hiring,
+              field ops, APIs.
             </p>
           </div>
 
           <div className="prose">
             <p>
-              We care about calm interfaces, honest marketing, and engineering
-              that survives contact with production: auth, billing, observability,
-              SEO foundations, and the unglamorous reliability work in between.
-            </p>
-            <p>
-              Our portfolio spans education SaaS across Australia and New Zealand,
-              identity tools in Southern Africa, applicant tracking, QR audit
-              workflows, wellness utilities, advocacy sites, and healthcare APIs.
-            </p>
-            <p>
-              Prefer the apex domain{" "}
-              <a href="https://seallabs.io">https://seallabs.io</a> (without www).
-              That same origin is the canonical home for Seal Labs across our
-              product footers.
+              Stack preference: Next.js, typed backends, Postgres, real billing,
+              real auth. Apex domain only:{" "}
+              <a href="https://seallabs.io">seallabs.io</a>.
             </p>
           </div>
 
           <div className="btn-row">
             <Link href="/work" className="btn btn--primary">
-              Browse the work
+              ./work
             </Link>
             <Link href="/contact" className="btn btn--ghost">
-              Get in touch
+              ./contact
             </Link>
           </div>
         </div>

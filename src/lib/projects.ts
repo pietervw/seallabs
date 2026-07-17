@@ -1,9 +1,16 @@
 export type ProjectStatus = "live" | "private" | "beta";
 
+export type ProjectTenant = {
+  name: string;
+  url: string;
+  domain: string;
+  region: string;
+};
+
 export type PortfolioProject = {
   id: string;
   name: string;
-  /** Live product URL. Omit when no public link. */
+  /** Live product URL. Omit when no public link or when tenants[] is used. */
   url?: string;
   domain: string;
   description: string;
@@ -12,7 +19,60 @@ export type PortfolioProject = {
   region: string;
   stack: string[];
   featured?: boolean;
+  /** Multi-tenant products: card opens a modal listing these for SEO click-through. */
+  tenants?: ProjectTenant[];
 };
+
+export const SCHOOL_REPORT_TENANTS: ProjectTenant[] = [
+  {
+    name: "NSW School Reports",
+    url: "https://nswschoolreports.com.au",
+    domain: "nswschoolreports.com.au",
+    region: "New South Wales",
+  },
+  {
+    name: "VIC School Reports",
+    url: "https://vicschoolreports.com.au",
+    domain: "vicschoolreports.com.au",
+    region: "Victoria",
+  },
+  {
+    name: "QLD School Reports",
+    url: "https://qldschoolreports.com.au",
+    domain: "qldschoolreports.com.au",
+    region: "Queensland",
+  },
+  {
+    name: "SA School Reports",
+    url: "https://saschoolreports.com.au",
+    domain: "saschoolreports.com.au",
+    region: "South Australia",
+  },
+  {
+    name: "WA School Reports",
+    url: "https://waschoolreports.com.au",
+    domain: "waschoolreports.com.au",
+    region: "Western Australia",
+  },
+  {
+    name: "NT School Reports",
+    url: "https://ntschoolreports.com.au",
+    domain: "ntschoolreports.com.au",
+    region: "Northern Territory",
+  },
+  {
+    name: "ACT School Reports",
+    url: "https://actschoolreports.com.au",
+    domain: "actschoolreports.com.au",
+    region: "Australian Capital Territory",
+  },
+  {
+    name: "NZ School Reports",
+    url: "https://schoolreports.nz",
+    domain: "schoolreports.nz",
+    region: "New Zealand",
+  },
+];
 
 /**
  * Seal Labs portfolio — products linked from the agency homepage.
@@ -47,8 +107,7 @@ export const PROJECTS: PortfolioProject[] = [
   {
     id: "schoolreports-multi",
     name: "School Reports",
-    url: "https://nswschoolreports.com.au",
-    domain: "nswschoolreports.com.au",
+    domain: "multi-tenant AU / NZ",
     description:
       "Multi-tenant AI report-comment SaaS for teachers — curriculum-aligned wording across Australian states and New Zealand, with teacher review before paste into school systems.",
     status: "live",
@@ -56,6 +115,7 @@ export const PROJECTS: PortfolioProject[] = [
     region: "AU / NZ",
     stack: ["Next.js", "Prisma", "Clerk", "Stripe", "OpenAI"],
     featured: true,
+    tenants: SCHOOL_REPORT_TENANTS,
   },
   {
     id: "checkid",
@@ -145,4 +205,37 @@ export const PROJECTS: PortfolioProject[] = [
 
 export function getFeaturedProjects(): PortfolioProject[] {
   return PROJECTS.filter((p) => p.featured);
+}
+
+export type PublicProductEntry = {
+  name: string;
+  url: string;
+  description: string;
+  region?: string;
+};
+
+/** Flatten projects + tenants into public crawlable entries (excludes private). */
+export function getPublicProductEntries(): PublicProductEntry[] {
+  const entries: PublicProductEntry[] = [];
+  for (const project of PROJECTS) {
+    if (project.tenants?.length) {
+      for (const tenant of project.tenants) {
+        entries.push({
+          name: tenant.name,
+          url: tenant.url,
+          description: `${project.description} (${tenant.region})`,
+          region: tenant.region,
+        });
+      }
+      continue;
+    }
+    if (project.url) {
+      entries.push({
+        name: project.name,
+        url: project.url,
+        description: project.description,
+      });
+    }
+  }
+  return entries;
 }

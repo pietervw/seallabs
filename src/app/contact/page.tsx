@@ -17,15 +17,11 @@ export default function ContactPage() {
       <section className="section">
         <div className="shell contact-layout">
           <div>
-            <p className="eyebrow">Contact</p>
-            <h1>Let’s talk</h1>
-            <p className="lede">
-              Tell us about the product, problem, or partnership you have in
-              mind. We typically reply within one business day.
-            </p>
-            <div className="prose" style={{ marginTop: "1.5rem" }}>
+            <p className="eyebrow">mail</p>
+            <h1>Contact</h1>
+            <p className="lede">Brief beats long. Reply within one business day.</p>
+            <div className="prose" style={{ marginTop: "1.25rem" }}>
               <p>
-                Prefer email?{" "}
                 <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
               </p>
             </div>

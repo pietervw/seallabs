@@ -12,28 +12,20 @@ export const metadata = createMarketingMetadata("services");
 
 const SERVICES = [
   {
-    title: "Product & SaaS engineering",
-    body: "End-to-end design and build of web products — authentication, billing, multi-tenancy, dashboards, and the operational details that keep them running.",
+    title: "SaaS build",
+    body: "Auth, billing, multi-tenancy, dashboards. Ship it. Run it.",
   },
   {
-    title: "Identity & verification systems",
-    body: "ID validation products, API access tiers, freemium funnels, and compliance-minded UX for markets that need trustworthy checks.",
+    title: "Identity systems",
+    body: "ID checks, API tiers, freemium funnels for markets that need verification.",
   },
   {
-    title: "Field & operations platforms",
-    body: "QR workflows, audit trails, evidence capture, and tools that hold up when the work happens on phones in the field.",
+    title: "Field ops",
+    body: "QR workflows, evidence capture, audit trails that survive the field.",
   },
   {
-    title: "Education & vertical SaaS",
-    body: "Curriculum-aligned tools, multi-tenant state sites, and teacher-facing products with careful copy and reliable delivery.",
-  },
-  {
-    title: "APIs & integrations",
-    body: "Provider lookup APIs, webhook pipelines, and SDK-friendly surfaces that other systems can depend on.",
-  },
-  {
-    title: "SEO, SSR & launch readiness",
-    body: "Canonical URLs, schema.org, sitemaps, llms.txt, and marketing pages that render without relying on client JavaScript for content.",
+    title: "APIs",
+    body: "Lookup APIs, webhooks, SDKs other systems can depend on.",
   },
 ] as const;
 
@@ -50,13 +42,9 @@ export default function ServicesPage() {
       <section className="section">
         <div className="shell">
           <div className="section__intro">
-            <p className="eyebrow">Services</p>
-            <h1>How we help</h1>
-            <p className="lede">
-              Focused engagements around shipping and operating software —
-              not endless decks. We prefer clear scope, calm delivery, and
-              measurable outcomes.
-            </p>
+            <p className="eyebrow">man seallabs</p>
+            <h1>Services</h1>
+            <p className="lede">Build. Deploy. Operate. No deck theatre.</p>
           </div>
 
           <div className="service-grid">
@@ -70,10 +58,10 @@ export default function ServicesPage() {
 
           <div className="btn-row">
             <Link href="/contact" className="btn btn--primary">
-              Discuss a project
+              ./contact
             </Link>
             <Link href="/work" className="btn btn--ghost">
-              See related work
+              ./work
             </Link>
           </div>
         </div>

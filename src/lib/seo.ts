@@ -7,7 +7,7 @@ import {
   absoluteUrl,
   getSocialSameAs,
 } from "@/lib/config";
-import { PROJECTS } from "@/lib/projects";
+import { PROJECTS, getPublicProductEntries } from "@/lib/projects";
 
 export type StructuredData = Record<string, unknown>;
 
@@ -31,7 +31,7 @@ type MarketingPageSeo = {
 export const MARKETING_PAGES: Record<MarketingPageKey, MarketingPageSeo> = {
   home: {
     path: "/",
-    title: "Seal Labs | Software studio for trustworthy SaaS",
+    title: "Seal Labs | Software systems",
     description: SITE_DESCRIPTION,
     changeFrequency: "weekly",
     priority: 1,
@@ -40,45 +40,42 @@ export const MARKETING_PAGES: Record<MarketingPageKey, MarketingPageSeo> = {
     path: "/work",
     title: "Work | Seal Labs",
     description:
-      "Products and platforms built by Seal Labs — education SaaS, identity verification, ATS, field audit workflows, APIs, and more.",
+      "Seal Labs products — education SaaS, identity, ATS, field audit, APIs.",
     changeFrequency: "weekly",
     priority: 0.9,
   },
   services: {
     path: "/services",
     title: "Services | Seal Labs",
-    description:
-      "Product design, full-stack SaaS engineering, multi-tenant platforms, identity systems, and durable cloud infrastructure from Seal Labs.",
+    description: "SaaS build, identity systems, field ops, APIs.",
     changeFrequency: "monthly",
     priority: 0.8,
   },
   about: {
     path: "/about",
     title: "About | Seal Labs",
-    description:
-      "Seal Labs is a software studio focused on calm craft, production reliability, and products that earn trust — from education tools to field operations.",
+    description: "Seal Labs builds production software systems.",
     changeFrequency: "monthly",
     priority: 0.7,
   },
   contact: {
     path: "/contact",
     title: "Contact | Seal Labs",
-    description:
-      "Get in touch with Seal Labs about a new product, partnership, or engineering engagement.",
+    description: "Contact Seal Labs.",
     changeFrequency: "yearly",
     priority: 0.6,
   },
   privacy: {
     path: "/privacy",
     title: "Privacy Policy | Seal Labs",
-    description: "How Seal Labs collects, uses, and protects personal information.",
+    description: "Seal Labs privacy policy.",
     changeFrequency: "yearly",
     priority: 0.3,
   },
   terms: {
     path: "/terms",
     title: "Terms of Service | Seal Labs",
-    description: "Terms governing use of the Seal Labs website and related services.",
+    description: "Seal Labs terms of service.",
     changeFrequency: "yearly",
     priority: 0.3,
   },
@@ -150,8 +147,9 @@ export function createOrganizationStructuredData(): StructuredData {
     description: SITE_DESCRIPTION,
     logo: {
       "@type": "ImageObject",
-      url: getCanonicalUrl("/favicon.ico"),
-    },    ...(sameAs.length > 0 ? { sameAs } : {}),
+      url: getCanonicalUrl("/icon.png"),
+    },
+    ...(sameAs.length > 0 ? { sameAs } : {}),
   };
 }
 
@@ -219,18 +217,18 @@ export function createProfessionalServiceStructuredData(): StructuredData {
 }
 
 export function createItemListStructuredData(): StructuredData {
-  const publicProjects = PROJECTS.filter((p) => p.url);
+  const items = getPublicProductEntries();
 
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Seal Labs products",
-    itemListElement: publicProjects.map((project, index) => ({
+    itemListElement: items.map((item, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      name: project.name,
-      url: project.url,
-      description: project.description,
+      name: item.name,
+      url: item.url,
+      description: item.description,
     })),
   };
 }
@@ -238,16 +236,20 @@ export function createItemListStructuredData(): StructuredData {
 export function createSoftwareApplicationStructuredData(
   project: (typeof PROJECTS)[number],
 ): StructuredData | null {
-  if (!project.url) return null;
+  const url = project.tenants?.[0]?.url ?? project.url;
+  if (!url) return null;
 
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: project.name,
-    url: project.url,
+    url,
     description: project.description,
     applicationCategory: project.category,
     operatingSystem: "Web",
+    ...(project.tenants?.length
+      ? { sameAs: project.tenants.map((tenant) => tenant.url) }
+      : {}),
     offers: {
       "@type": "Offer",
       price: "0",

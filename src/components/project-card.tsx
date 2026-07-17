@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { ProjectCardBody } from "@/components/project-card-body";
+import { TenantProjectCard } from "@/components/tenant-project-card";
 import type { PortfolioProject } from "@/lib/projects";
 
 type ProjectCardProps = {
@@ -7,25 +9,16 @@ type ProjectCardProps = {
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const inner = (
-    <>
-      <div className="project-card__meta">
-        <span className="project-card__category">{project.category}</span>
-        <span
-          className={`project-card__status project-card__status--${project.status}`}
-        >
-          {project.status === "private" ? "Private" : project.status}
-        </span>
-      </div>
-      <h3 className="project-card__title">{project.name}</h3>
-      <p className="project-card__domain">{project.domain}</p>
-      <p className="project-card__description">{project.description}</p>
-      <ul className="project-card__stack" aria-label="Tech stack">
-        {project.stack.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </>
+  if (project.tenants && project.tenants.length > 0) {
+    return <TenantProjectCard project={project} />;
+  }
+
+  const cta = project.url ? (
+    <span className="project-card__cta">open →</span>
+  ) : (
+    <span className="project-card__cta project-card__cta--muted">
+      no public link
+    </span>
   );
 
   if (project.url) {
@@ -36,18 +29,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        {inner}
-        <span className="project-card__cta">Visit site →</span>
+        <ProjectCardBody project={project} />
+        {cta}
       </a>
     );
   }
 
   return (
     <article className="project-card">
-      {inner}
-      <span className="project-card__cta project-card__cta--muted">
-        No public link
-      </span>
+      <ProjectCardBody project={project} />
+      {cta}
     </article>
   );
 }
@@ -73,17 +64,14 @@ export function FeaturedWorkTeaser({ projects }: ProjectGridProps) {
     <section className="section" aria-labelledby="featured-work-heading">
       <div className="shell">
         <div className="section__intro">
-          <p className="eyebrow">Selected work</p>
-          <h2 id="featured-work-heading">Products in production</h2>
-          <p className="lede">
-            Live platforms across education, identity, hiring, and field
-            operations — built to be operated, not just demoed.
-          </p>
+          <p className="eyebrow">ls ./work</p>
+          <h2 id="featured-work-heading">Featured</h2>
+          <p className="lede">Portfolio of work</p>
         </div>
         <ProjectGrid projects={projects} />
         <div className="section__action">
           <Link href="/work" className="btn btn--ghost">
-            View all work
+            ./work --all
           </Link>
         </div>
       </div>

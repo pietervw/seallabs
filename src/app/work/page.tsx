@@ -29,12 +29,9 @@ export default function WorkPage() {
       <section className="section">
         <div className="shell">
           <div className="section__intro">
-            <p className="eyebrow">Portfolio</p>
+            <p className="eyebrow">ls -la ./products</p>
             <h1>Work</h1>
-            <p className="lede">
-              Products and platforms from Seal Labs — live where linked, private
-              where noted. Each is built for real operators, not slideware.
-            </p>
+            <p className="lede">Live links where public. Private where noted.</p>
           </div>
           <ProjectGrid projects={PROJECTS} />
         </div>

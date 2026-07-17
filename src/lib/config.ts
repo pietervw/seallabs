@@ -23,9 +23,9 @@ export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME?.trim() || "Seal Labs
 export const SITE_LEGAL_NAME =
   process.env.NEXT_PUBLIC_SITE_LEGAL_NAME?.trim() || "Seal Labs";
 export const SITE_TAGLINE =
-  "Software studio building trustworthy SaaS, identity tools, and field operations platforms.";
+  "Production SaaS — identity, hiring, field ops, education, APIs.";
 export const SITE_DESCRIPTION =
-  "Seal Labs designs and ships production SaaS — education tools, identity verification, applicant tracking, field audit workflows, and APIs — with calm craft and durable engineering.";
+  "Seal Labs ships production software systems: education SaaS, identity verification, applicant tracking, field audit workflows, and APIs.";
 export const SITE_LOCALE = "en_AU";
 export const SUPPORT_EMAIL =
   process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || "hello@seallabs.io";

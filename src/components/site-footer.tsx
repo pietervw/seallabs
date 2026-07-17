@@ -1,15 +1,7 @@
 import Link from "next/link";
 
 import { SITE_NAME, SITE_URL, SUPPORT_EMAIL } from "@/lib/config";
-
-const FOOTER_NAV = [
-  { href: "/work", label: "Work" },
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-  { href: "/privacy", label: "Privacy" },
-  { href: "/terms", label: "Terms" },
-] as const;
+import { LEGAL_NAV, PRIMARY_NAV } from "@/lib/nav";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -22,15 +14,13 @@ export function SiteFooter() {
             <span className="brand-mark__seal" aria-hidden="true" />
             <span className="brand-mark__text">{SITE_NAME}</span>
           </Link>
-          <p className="site-footer__tagline">
-            Calm craft. Production software. Products that earn trust.
-          </p>
+          <p className="site-footer__tagline">exit 0 — systems that ship.</p>
         </div>
 
         <nav className="site-footer__nav" aria-label="Footer">
-          {FOOTER_NAV.map((item) => (
+          {[...PRIMARY_NAV, ...LEGAL_NAV].map((item) => (
             <Link key={item.href} href={item.href}>
-              {item.label}
+              ./{item.label}
             </Link>
           ))}
         </nav>
@@ -43,7 +33,7 @@ export function SiteFooter() {
             <a href={SITE_URL}>{SITE_URL.replace(/^https?:\/\//, "")}</a>
           </p>
           <p className="site-footer__copy">
-            © {year} {SITE_NAME}. All rights reserved.
+            © {year} {SITE_NAME}
           </p>
         </div>
       </div>

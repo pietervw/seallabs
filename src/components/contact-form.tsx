@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 import { TURNSTILE_SITE_KEY } from "@/lib/public-config";
 
@@ -27,6 +27,7 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileReady, setTurnstileReady] = useState(!TURNSTILE_SITE_KEY);
   const turnstileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -44,12 +45,17 @@ export function ContactForm() {
         "expired-callback": () => setTurnstileToken(""),
       });
       node.dataset.rendered = "1";
+      setTurnstileReady(true);
     };
 
     const onScriptError = () => {
       if (cancelled) return;
+      // Fail open so a blocked/unavailable script does not permanently brick the form.
+      setTurnstileReady(false);
       setStatus("error");
-      setMessage("Security check failed to load. Please refresh and try again.");
+      setMessage(
+        "Security check unavailable — you can still send, or email us directly.",
+      );
     };
 
     if (window.turnstile) {
@@ -72,8 +78,6 @@ export function ContactForm() {
 
     script.addEventListener("load", render);
     script.addEventListener("error", onScriptError);
-    // If the script finished loading before this effect subscribed, `load` won't
-    // fire again — retry once on the next tick.
     const retry = window.setTimeout(() => {
       if (window.turnstile) render();
     }, 0);
@@ -93,8 +97,9 @@ export function ContactForm() {
 
     const form = event.currentTarget;
     const data = new FormData(form);
+    const requireToken = Boolean(TURNSTILE_SITE_KEY && turnstileReady);
 
-    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+    if (requireToken && !turnstileToken) {
       setStatus("error");
       setMessage("Please complete the security check.");
       return;
@@ -110,7 +115,7 @@ export function ContactForm() {
           company: String(data.get("company") || ""),
           message: String(data.get("message") || ""),
           website: String(data.get("website") || ""),
-          turnstileToken,
+          turnstileToken: requireToken ? turnstileToken : "",
         }),
       });
 
@@ -184,7 +189,7 @@ export function ContactForm() {
         className="btn btn--primary"
         disabled={status === "submitting"}
       >
-        {status === "submitting" ? "Sending…" : "Send message"}
+        {status === "submitting" ? "sending…" : "./send"}
       </button>
 
       {message ? (

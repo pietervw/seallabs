@@ -34,7 +34,9 @@ async function verifyTurnstile(token: string, ip: string | null): Promise<boolea
   // and treats incomplete Turnstile config as disabled.
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() || "";
   if (!TURNSTILE_SECRET_KEY || !siteKey) return true;
-  if (!token) return false;
+  // Fail open when the browser never produced a token (script blocked / failed).
+  // If a token is present it must verify successfully.
+  if (!token) return true;
 
   try {
     const body = new URLSearchParams({
