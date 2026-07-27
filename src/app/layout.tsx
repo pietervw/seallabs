@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Seal Labs",
   description: "Seal Labs",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://seallabs.io",
+  ),
 };
 
 export default function RootLayout({
