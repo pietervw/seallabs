@@ -1,0 +1,38 @@
+# Dependencies & build output
+node_modules
+.next
+out
+
+# Git / IDE
+.git
+.gitignore
+.gitattributes
+.cursor
+.vscode
+.idea
+
+# Env & secrets (pass via Coolify / --env-file at runtime)
+.env
+.env.*
+!.env.example
+
+# Docs & agent files (not needed in image)
+*.md
+AGENTS.md
+CLAUDE.md
+
+# Tests / lint / CI
+coverage
+.nyc_output
+eslint.config.*
+*.test.*
+*.spec.*
+
+# Logs & misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+Dockerfile*
+.dockerignore
