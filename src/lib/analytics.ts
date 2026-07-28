@@ -31,25 +31,42 @@ export function trackEvent(name: string, data?: EventData, retries = 12): void {
   }
 }
 
+let activationInFlight = false;
+
 export function trackActivationOnce(data?: EventData): void {
   const key = "umami:activation-completed";
   try {
     if (window.localStorage.getItem(key)) return;
   } catch {
-    // Storage may be unavailable; the event can still be sent.
+    // Storage may be unavailable; continue with in-memory guard.
   }
+  if (activationInFlight) return;
+  activationInFlight = true;
 
   const tryTrack = (retries = 12): void => {
+    try {
+      if (window.localStorage.getItem(key)) {
+        activationInFlight = false;
+        return;
+      }
+    } catch {
+      // ignore storage errors while retrying
+    }
     if (window.umami) {
       window.umami.track(AnalyticsEvents.ACTIVATION_COMPLETED, data);
       try {
         window.localStorage.setItem(key, "1");
       } catch {
-        // Storage may be unavailable after a successful send.
+        // Memory guard still prevents duplicate sends this session.
       }
+      activationInFlight = false;
       return;
     }
-    if (retries > 0) window.setTimeout(() => tryTrack(retries - 1), 250);
+    if (retries > 0) {
+      window.setTimeout(() => tryTrack(retries - 1), 250);
+      return;
+    }
+    activationInFlight = false;
   };
 
   tryTrack();
