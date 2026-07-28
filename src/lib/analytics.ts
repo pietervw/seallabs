@@ -35,9 +35,22 @@ export function trackActivationOnce(data?: EventData): void {
   const key = "umami:activation-completed";
   try {
     if (window.localStorage.getItem(key)) return;
-    window.localStorage.setItem(key, "1");
   } catch {
     // Storage may be unavailable; the event can still be sent.
   }
-  trackEvent(AnalyticsEvents.ACTIVATION_COMPLETED, data);
+
+  const tryTrack = (retries = 12): void => {
+    if (window.umami) {
+      window.umami.track(AnalyticsEvents.ACTIVATION_COMPLETED, data);
+      try {
+        window.localStorage.setItem(key, "1");
+      } catch {
+        // Storage may be unavailable after a successful send.
+      }
+      return;
+    }
+    if (retries > 0) window.setTimeout(() => tryTrack(retries - 1), 250);
+  };
+
+  tryTrack();
 }

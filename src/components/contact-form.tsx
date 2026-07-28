@@ -134,8 +134,11 @@ export function ContactForm() {
       }
 
       setStatus("success");
-      trackActivationOnce({ source: "contact_form" });
-      trackEvent(AnalyticsEvents.VALUE_DELIVERED, { source: "contact_form" });
+      const honeypot = String(data.get("website") || "").trim();
+      if (!honeypot) {
+        trackActivationOnce({ source: "contact_form" });
+        trackEvent(AnalyticsEvents.VALUE_DELIVERED, { source: "contact_form" });
+      }
       setMessage("Thanks — we will reply within one business day.");
       form.reset();
       setTurnstileToken("");
