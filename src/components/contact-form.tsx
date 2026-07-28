@@ -3,6 +3,11 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 
 import { TURNSTILE_SITE_KEY } from "@/lib/public-config";
+import {
+  AnalyticsEvents,
+  trackActivationOnce,
+  trackEvent,
+} from "@/lib/analytics";
 
 declare global {
   interface Window {
@@ -129,6 +134,11 @@ export function ContactForm() {
       }
 
       setStatus("success");
+      const honeypot = String(data.get("website") || "").trim();
+      if (!honeypot) {
+        trackActivationOnce({ source: "contact_form" });
+        trackEvent(AnalyticsEvents.VALUE_DELIVERED, { source: "contact_form" });
+      }
       setMessage("Thanks — we will reply within one business day.");
       form.reset();
       setTurnstileToken("");
