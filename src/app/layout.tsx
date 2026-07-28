@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Orbitron, Share_Tech_Mono } from "next/font/google";
 import Script from "next/script";
 
+import { UmamiVisit } from "@/components/umami-visit";
 import {
   GA_MEASUREMENT_ID,
   SITE_DESCRIPTION,
@@ -118,6 +119,7 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to content
         </a>
+        <UmamiVisit />
         {children}
         {UMAMI_SRC && UMAMI_WEBSITE_ID ? (
           <Script
