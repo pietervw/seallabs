@@ -124,11 +124,6 @@ export default function RootLayout({
         </a>
         <UmamiVisit />
         {children}
-        <footer className="border-t border-slate-700 bg-[#05080c] px-6 py-6 text-center text-sm text-slate-400">
-          <a className="underline underline-offset-4 hover:text-white" href="/sirens-emulator/privacy-policy">
-            Sirens Emulator Privacy Policy
-          </a>
-        </footer>
         {UMAMI_SRC && UMAMI_WEBSITE_ID ? (
           <Script
             src={UMAMI_SRC}

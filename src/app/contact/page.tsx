@@ -25,25 +25,27 @@ export default function ContactPage() {
             <PageIntro
               className="mb-0"
               title="Contact"
-              description="Brief beats long. We reply within one business day."
+              description="Send us a message to get the ball rolling."
             />
             <p className="mt-6">
               <a href={`mailto:${SUPPORT_EMAIL}`} className={textLinkClass}>
                 {SUPPORT_EMAIL}
               </a>
             </p>
-            <div className="mt-8 flex justify-center md:justify-start">
-              <Image
-                src={sealBox}
-                alt="Seal Labs mascot"
-                className="h-auto w-[75%] max-w-[15rem] object-contain sm:max-w-[18rem] md:max-w-[75%]"
-                sizes="(max-width: 640px) 240px, (max-width: 768px) 288px, (max-width: 1024px) 315px, 360px"
-                priority
-              />
-            </div>
           </div>
 
-          <ContactForm />
+          <div className="md:row-span-2">
+            <ContactForm />
+          </div>
+
+          <div className="flex justify-center md:justify-start">
+            <Image
+              src={sealBox}
+              alt="Seal Labs mascot"
+              className="h-auto w-[75%] max-w-[15rem] object-contain sm:max-w-[18rem] md:max-w-[75%]"
+              sizes="(max-width: 640px) 240px, (max-width: 768px) 288px, (max-width: 1024px) 315px, 360px"
+            />
+          </div>
         </Container>
       </Section>
     </MarketingShell>
