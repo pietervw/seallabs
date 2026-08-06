@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { Container } from "@/components/ui/section";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/config";
-import { CTA_NAV, LEGAL_NAV, PRIMARY_NAV } from "@/lib/nav";
+import { CTA_NAV, FOOTER_NAV, LEGAL_NAV, PRIMARY_NAV } from "@/lib/nav";
 import { textLinkClass } from "@/lib/utils";
 
 export function SiteFooter() {
@@ -18,7 +18,7 @@ export function SiteFooter() {
         </div>
 
         <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Footer">
-          {[...PRIMARY_NAV, CTA_NAV, ...LEGAL_NAV].map((item) => (
+          {[...PRIMARY_NAV, ...FOOTER_NAV, CTA_NAV, ...LEGAL_NAV].map((item) => (
             <Link key={item.href} href={item.href} className={textLinkClass}>
               {item.label}
             </Link>

@@ -41,7 +41,7 @@ function TenantModal({
         onClick={onClose}
       />
       <div
-        className="relative z-10 w-full max-w-lg rounded-2xl border-2 border-ink bg-paper p-6 shadow-brutal-lg"
+        className="relative z-10 max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-2xl border-2 border-ink bg-paper p-6 shadow-brutal-lg"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}

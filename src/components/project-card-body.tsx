@@ -9,11 +9,15 @@ export function ProjectCardBody({ project }: { project: PortfolioProject }) {
     <>
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <Badge variant="muted">{project.category}</Badge>
-        <Badge
-          variant={project.status === "live" ? "brand" : "outline"}
-          title={project.status === "wip" ? "work in progress" : undefined}
-        >
-          {project.status}
+        <Badge variant={project.status === "live" ? "brand" : "outline"}>
+          {project.status === "wip" ? (
+            <>
+              <span aria-hidden="true">wip</span>
+              <span className="sr-only">work in progress</span>
+            </>
+          ) : (
+            project.status
+          )}
         </Badge>
       </div>
       <h3 className="font-display text-xl font-extrabold text-ink">

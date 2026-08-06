@@ -31,7 +31,7 @@ export default function WorkPage() {
         <Container>
           <PageIntro
             title="Work"
-            description="Live links where public. Private where noted."
+            description="Live links where public. WIP marked where still shipping."
           />
           <ProjectGrid projects={PROJECTS} />
         </Container>

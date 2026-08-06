@@ -39,7 +39,6 @@ export default function ContactPage() {
                 className="h-auto w-[75%] max-w-[15rem] object-contain sm:max-w-[18rem] md:max-w-[75%]"
                 sizes="(max-width: 640px) 240px, (max-width: 768px) 288px, (max-width: 1024px) 315px, 360px"
                 priority
-                quality={90}
               />
             </div>
           </div>

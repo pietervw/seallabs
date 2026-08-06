@@ -91,10 +91,9 @@ export function SiteHeader({ currentPath = "/" }: SiteHeaderProps) {
       </Container>
 
       {open ? (
-        <button
-          type="button"
+        <div
           className="fixed inset-0 z-40 bg-ink/40 md:hidden"
-          aria-label="Close menu"
+          aria-hidden="true"
           onClick={onClose}
         />
       ) : null}

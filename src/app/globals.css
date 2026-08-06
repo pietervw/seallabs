@@ -20,7 +20,7 @@
   --color-paper: var(--paper);
   --color-paper-muted: var(--paper-muted);
   --color-line: var(--line);
-  --color-ring: var(--brand);
+  --color-ring: var(--ink);
   --font-sans: var(--font-plus-jakarta);
   --font-display: var(--font-outfit);
   --shadow-brutal: 4px 4px 0 0 var(--ink);

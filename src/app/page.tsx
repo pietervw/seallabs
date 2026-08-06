@@ -42,7 +42,7 @@ export default function HomePage() {
         />
         <Container className="relative grid gap-12 py-16 md:grid-cols-2 md:items-center md:py-24">
           <div>
-            <BrandMark size="hero" className="mb-6" showMascot={false} />
+            <BrandMark size="hero" className="mb-6" showMascot={false} linked={false} />
             <h1 className="font-display text-3xl font-extrabold tracking-tight text-ink md:text-5xl">
               We ship software that{" "}
               <span className="underline decoration-brand decoration-4 underline-offset-4">
@@ -50,7 +50,7 @@ export default function HomePage() {
               </span>
             </h1>
             <p className="mt-5 max-w-xl text-lg text-ink-muted md:text-xl">
-              We build custom software solutions that drives business value.
+              We build custom software solutions that drive business value.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href="/work" size="lg">

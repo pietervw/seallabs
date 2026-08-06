@@ -214,7 +214,7 @@ export type PublicProductEntry = {
   region?: string;
 };
 
-/** Flatten projects + tenants into public crawlable entries (excludes private). */
+/** Flatten projects + tenants into public crawlable entries (skips entries without a public URL). */
 export function getPublicProductEntries(): PublicProductEntry[] {
   const entries: PublicProductEntry[] = [];
   for (const project of PROJECTS) {

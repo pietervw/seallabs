@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import logoMascot from "../../public/logo-mascot.png";
-import { SITE_NAME } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
 const TEXT_SIZES = {
@@ -22,6 +21,7 @@ export function BrandMark({
   onClick,
   priority = false,
   showMascot = true,
+  linked = true,
 }: {
   className?: string;
   size?: keyof typeof TEXT_SIZES;
@@ -29,14 +29,10 @@ export function BrandMark({
   onClick?: () => void;
   priority?: boolean;
   showMascot?: boolean;
+  linked?: boolean;
 }) {
-  return (
-    <Link
-      href={href}
-      aria-label={`${SITE_NAME} home`}
-      onClick={onClick}
-      className={cn("inline-flex items-center gap-2", className)}
-    >
+  const content = (
+    <>
       {showMascot ? (
         <Image
           src={logoMascot}
@@ -44,7 +40,6 @@ export function BrandMark({
           className={cn("shrink-0 object-contain", MASCOT.className)}
           sizes={MASCOT.sizes}
           priority={priority}
-          quality={90}
         />
       ) : null}
       <span
@@ -58,6 +53,23 @@ export function BrandMark({
           Labs
         </span>
       </span>
+    </>
+  );
+
+  const classes = cn("inline-flex items-center gap-2", className);
+
+  if (!linked) {
+    return <span className={classes}>{content}</span>;
+  }
+
+  return (
+    <Link
+      href={href}
+      aria-label="Seal Labs home"
+      onClick={onClick}
+      className={classes}
+    >
+      {content}
     </Link>
   );
 }
