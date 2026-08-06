@@ -11,12 +11,12 @@ export function MarketingShell({
   currentPath = "/",
 }: MarketingShellProps) {
   return (
-    <>
+    <div className="flex min-h-full flex-1 flex-col">
       <SiteHeader currentPath={currentPath} />
-      <main id="main" className="site-main">
+      <main id="main" className="flex-1">
         {children}
       </main>
       <SiteFooter />
-    </>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Orbitron, Share_Tech_Mono } from "next/font/google";
+import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 
 import { UmamiVisit } from "@/components/umami-visit";
@@ -17,18 +17,18 @@ import {
 
 import "./globals.css";
 
-const display = Orbitron({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-plus-jakarta",
   display: "swap",
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const mono = Share_Tech_Mono({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-outfit",
   display: "swap",
-  weight: "400",
+  weight: ["600", "700", "800"],
 });
 
 const ogImage = {
@@ -39,10 +39,10 @@ const ogImage = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05080c",
+  themeColor: "#f5b48a",
   width: "device-width",
   initialScale: 1,
-  colorScheme: "dark",
+  colorScheme: "light",
 };
 
 export const metadata: Metadata = {
@@ -114,8 +114,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-AU" className={`${display.variable} ${mono.variable} h-full`}>
-      <body className="min-h-full flex flex-col">
+    <html
+      lang="en-AU"
+      className={`${plusJakarta.variable} ${outfit.variable} h-full overflow-x-clip antialiased`}
+    >
+      <body className="flex min-h-full flex-col bg-paper text-ink">
         <a href="#main" className="skip-link">
           Skip to content
         </a>

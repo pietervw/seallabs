@@ -23,7 +23,7 @@ export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME?.trim() || "Seal Labs
 export const SITE_LEGAL_NAME =
   process.env.NEXT_PUBLIC_SITE_LEGAL_NAME?.trim() || "Seal Labs";
 export const SITE_TAGLINE =
-  "Production SaaS — identity, hiring, field ops, education, APIs.";
+  "No seals were harmed in the making of this website.";
 export const SITE_DESCRIPTION =
   "Seal Labs ships production software systems: education SaaS, identity verification, applicant tracking, field audit workflows, and APIs.";
 export const SITE_LOCALE = "en_AU";
