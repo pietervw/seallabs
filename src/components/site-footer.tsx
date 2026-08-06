@@ -1,42 +1,41 @@
 import Link from "next/link";
 
-import { SITE_NAME, SITE_URL, SUPPORT_EMAIL } from "@/lib/config";
-import { LEGAL_NAV, PRIMARY_NAV } from "@/lib/nav";
+import { BrandMark } from "@/components/brand-mark";
+import { Container } from "@/components/ui/section";
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/config";
+import { CTA_NAV, LEGAL_NAV, PRIMARY_NAV } from "@/lib/nav";
+import { textLinkClass } from "@/lib/utils";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="site-footer">
-      <div className="shell site-footer__inner">
-        <div className="site-footer__brand">
-          <Link href="/" className="brand-mark brand-mark--footer">
-            <span className="brand-mark__seal" aria-hidden="true" />
-            <span className="brand-mark__text">{SITE_NAME}</span>
-          </Link>
-          <p className="site-footer__tagline">exit 0 — systems that ship.</p>
+    <footer className="mt-auto border-t-2 border-ink bg-paper-muted">
+      <Container className="flex flex-col gap-10 py-12 md:flex-row md:items-start md:justify-between">
+        <div className="max-w-sm">
+          <BrandMark />
+          <p className="mt-3 text-sm text-ink-muted">{SITE_TAGLINE}</p>
         </div>
 
-        <nav className="site-footer__nav" aria-label="Footer">
-          {[...PRIMARY_NAV, ...LEGAL_NAV].map((item) => (
-            <Link key={item.href} href={item.href}>
-              ./{item.label}
+        <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Footer">
+          {[...PRIMARY_NAV, CTA_NAV, ...LEGAL_NAV].map((item) => (
+            <Link key={item.href} href={item.href} className={textLinkClass}>
+              {item.label}
             </Link>
           ))}
         </nav>
 
-        <div className="site-footer__meta">
+        <div className="space-y-1 text-sm text-ink-muted">
           <p>
-            <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+            <a href={SITE_URL} className={textLinkClass}>
+              {SITE_URL.replace(/^https?:\/\//, "")}
+            </a>
           </p>
-          <p>
-            <a href={SITE_URL}>{SITE_URL.replace(/^https?:\/\//, "")}</a>
-          </p>
-          <p className="site-footer__copy">
+          <p className="pt-2">
             © {year} {SITE_NAME}
           </p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

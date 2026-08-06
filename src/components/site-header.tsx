@@ -3,15 +3,19 @@
 import Link from "next/link";
 import { useCallback, useId, useState } from "react";
 
-import { SITE_NAME } from "@/lib/config";
-import { PRIMARY_NAV } from "@/lib/nav";
+import { BrandMark } from "@/components/brand-mark";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/section";
+import { CTA_NAV, PRIMARY_NAV } from "@/lib/nav";
 import { useOverlayLock } from "@/lib/use-overlay-lock";
+import { cn } from "@/lib/utils";
 
 type SiteHeaderProps = {
   currentPath?: string;
 };
 
 function isActive(currentPath: string, href: string): boolean {
+  if (href === "/") return currentPath === "/";
   return currentPath === href || currentPath.startsWith(`${href}/`);
 }
 
@@ -23,58 +27,73 @@ export function SiteHeader({ currentPath = "/" }: SiteHeaderProps) {
   useOverlayLock(open, onClose, "nav-open");
 
   return (
-    <header className={`site-header${open ? " is-open" : ""}`}>
-      <div className="shell site-header__inner">
-        <Link
-          href="/"
-          className="brand-mark"
-          aria-label={`${SITE_NAME} home`}
-          onClick={onClose}
-        >
-          <span className="brand-mark__seal" aria-hidden="true" />
-          <span className="brand-mark__text">{SITE_NAME}</span>
-        </Link>
+    <header className="sticky top-0 z-50 border-b-2 border-ink bg-paper">
+      <Container className="flex h-16 items-center gap-4">
+        <BrandMark onClick={onClose} className="shrink-0" priority />
 
-        <nav className="site-nav site-nav--desktop" aria-label="Primary">
+        <nav
+          className="ml-auto hidden items-center gap-6 md:flex"
+          aria-label="Primary"
+        >
           {PRIMARY_NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={
+              className={cn(
+                "text-sm font-semibold transition-colors",
                 isActive(currentPath, item.href)
-                  ? "site-nav__link is-active"
-                  : "site-nav__link"
-              }
+                  ? "text-ink"
+                  : "text-ink-muted hover:text-ink",
+              )}
             >
-              ./{item.label}
+              {item.label}
             </Link>
           ))}
         </nav>
 
-        <Link href="/contact" className="btn btn--primary site-header__cta">
-          ./connect
-        </Link>
+        <Button
+          href={CTA_NAV.href}
+          size="sm"
+          className="ml-auto hidden md:ml-0 md:inline-flex"
+        >
+          {CTA_NAV.label}
+        </Button>
 
         <button
           type="button"
-          className="menu-toggle"
+          className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border-2 border-ink bg-paper md:hidden"
           aria-expanded={open}
           aria-controls={menuId}
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((value) => !value)}
         >
-          <span className="menu-toggle__bars" aria-hidden="true">
-            <span />
-            <span />
-            <span />
+          <span className="flex w-5 flex-col gap-1" aria-hidden="true">
+            <span
+              className={cn(
+                "block h-0.5 w-full bg-ink transition-transform",
+                open && "translate-y-[6px] rotate-45",
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-full bg-ink transition-opacity",
+                open && "opacity-0",
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-full bg-ink transition-transform",
+                open && "-translate-y-[6px] -rotate-45",
+              )}
+            />
           </span>
         </button>
-      </div>
+      </Container>
 
       {open ? (
         <button
           type="button"
-          className="mobile-menu__backdrop"
+          className="fixed inset-0 z-40 bg-ink/40 md:hidden"
           aria-label="Close menu"
           onClick={onClose}
         />
@@ -82,37 +101,31 @@ export function SiteHeader({ currentPath = "/" }: SiteHeaderProps) {
 
       <div
         id={menuId}
-        className={`mobile-menu${open ? " is-open" : ""}`}
+        className="absolute inset-x-0 top-full z-50 border-b-2 border-ink bg-paper md:hidden"
         hidden={!open}
       >
-        <div className="shell mobile-menu__inner">
-          <p className="mobile-menu__prompt" aria-hidden="true">
-            {">_"} nav --list
-          </p>
-          <nav className="mobile-menu__nav" aria-label="Mobile">
+        <Container className="flex flex-col gap-4 py-6">
+          <nav className="flex flex-col gap-2" aria-label="Mobile">
             {PRIMARY_NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={
+                className={cn(
+                  "rounded-xl border-2 px-4 py-3 font-display text-lg font-bold",
                   isActive(currentPath, item.href)
-                    ? "mobile-menu__link is-active"
-                    : "mobile-menu__link"
-                }
+                    ? "border-ink bg-brand text-ink"
+                    : "border-transparent text-ink hover:border-ink hover:bg-paper-muted",
+                )}
                 onClick={onClose}
               >
-                ./{item.label}
+                {item.label}
               </Link>
             ))}
           </nav>
-          <Link
-            href="/contact"
-            className="btn btn--primary mobile-menu__cta"
-            onClick={onClose}
-          >
-            ./connect
-          </Link>
-        </div>
+          <Button href={CTA_NAV.href} onClick={onClose} className="w-full">
+            {CTA_NAV.label}
+          </Button>
+        </Container>
       </div>
     </header>
   );

@@ -15,7 +15,6 @@ export type MarketingPageKey =
   | "home"
   | "work"
   | "services"
-  | "about"
   | "contact"
   | "privacy"
   | "terms";
@@ -51,13 +50,6 @@ export const MARKETING_PAGES: Record<MarketingPageKey, MarketingPageSeo> = {
     changeFrequency: "monthly",
     priority: 0.8,
   },
-  about: {
-    path: "/about",
-    title: "About | Seal Labs",
-    description: "Seal Labs builds production software systems.",
-    changeFrequency: "monthly",
-    priority: 0.7,
-  },
   contact: {
     path: "/contact",
     title: "Contact | Seal Labs",
@@ -85,7 +77,6 @@ export const SITEMAP_PAGE_KEYS: MarketingPageKey[] = [
   "home",
   "work",
   "services",
-  "about",
   "contact",
   "privacy",
   "terms",

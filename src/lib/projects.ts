@@ -1,4 +1,4 @@
-export type ProjectStatus = "live" | "private" | "beta";
+export type ProjectStatus = "live" | "private" | "beta" | "wip";
 
 export type ProjectTenant = {
   name: string;
@@ -79,6 +79,32 @@ export const SCHOOL_REPORT_TENANTS: ProjectTenant[] = [
  */
 export const PROJECTS: PortfolioProject[] = [
   {
+    id: "checkid",
+    name: "CheckID",
+    url: "https://checkid.co.za",
+    domain: "checkid.co.za",
+    description:
+      "South African ID number validator — format, checksum, age, gender, and citizenship checks with freemium tiers and API access for teams.",
+    status: "live",
+    category: "Identity",
+    region: "South Africa",
+    stack: ["Next.js", "Prisma", "Clerk", "Stripe", "microservices", ".NET", "API"],
+    featured: true,
+  },
+  {
+    id: "schoolreports-multi",
+    name: "School Reports",
+    domain: "multi-tenanted codebase",
+    description:
+      "AI report-comment generator for teachers. AI trained and curriculum-aligned for each Australian state and New Zealand.",
+    status: "live",
+    category: "Education",
+    region: "AU / NZ",
+    stack: ["Next.js", "Prisma", "Clerk", "Stripe", "OpenAI"],
+    featured: true,
+    tenants: SCHOOL_REPORT_TENANTS,
+  },
+  {
     id: "sealaudit",
     name: "SealAudit",
     url: "https://sealaudit.com",
@@ -97,37 +123,11 @@ export const PROJECTS: PortfolioProject[] = [
     url: "https://sealats.com",
     domain: "sealats.com",
     description:
-      "Multi-tenant applicant tracking for small and medium hiring teams — job boards, candidate pipelines, and organisation workspaces.",
-    status: "live",
+      "Multi-tenant applicant tracking for SME's. Simplify hiring with job boards, candidate pipelines and onboarding.",
+    status: "wip",
     category: "Hiring",
     region: "AU / NZ",
     stack: [".NET", "React", "PostgreSQL", "Clerk", "Stripe"],
-    featured: true,
-  },
-  {
-    id: "schoolreports-multi",
-    name: "School Reports",
-    domain: "multi-tenant AU / NZ",
-    description:
-      "Multi-tenant AI report-comment SaaS for teachers — curriculum-aligned wording across Australian states and New Zealand, with teacher review before paste into school systems.",
-    status: "live",
-    category: "Education",
-    region: "AU / NZ",
-    stack: ["Next.js", "Prisma", "Clerk", "Stripe", "OpenAI"],
-    featured: true,
-    tenants: SCHOOL_REPORT_TENANTS,
-  },
-  {
-    id: "checkid",
-    name: "CheckID",
-    url: "https://checkid.co.za",
-    domain: "checkid.co.za",
-    description:
-      "South African ID number validator — format, checksum, age, gender, and citizenship checks with freemium tiers and API access for teams.",
-    status: "live",
-    category: "Identity",
-    region: "South Africa",
-    stack: ["Next.js", "Prisma", "Clerk", "Stripe"],
     featured: true,
   },
   {
@@ -144,7 +144,7 @@ export const PROJECTS: PortfolioProject[] = [
   },
   {
     id: "npi-api",
-    name: "Health Provider API",
+    name: "US Health Provider API",
     url: "https://healthproviderapi.com",
     domain: "healthproviderapi.com",
     description:
@@ -152,7 +152,7 @@ export const PROJECTS: PortfolioProject[] = [
     status: "live",
     category: "Healthcare API",
     region: "United States",
-    stack: ["API", "TypeScript", "Python", "C#"],
+    stack: ["API", "TypeScript", ".NET", "C#"],
   },
   {
     id: "indiedevtest",
@@ -164,7 +164,7 @@ export const PROJECTS: PortfolioProject[] = [
     status: "live",
     category: "Community",
     region: "Global",
-    stack: ["Next.js", "SendGrid", "Turnstile"],
+    stack: ["Next.js", "SendGrid", "Cloudflare R2"],
   },
   {
     id: "ibreatheonline",
@@ -179,6 +179,17 @@ export const PROJECTS: PortfolioProject[] = [
     stack: ["Next.js", "Tailwind"],
   },
   {
+    id: "engineering-comments-register",
+    name: "Engineering Comments Register",
+    domain: "Private",
+    description:
+      "Internal PM toolkit that replaces spreadsheet comment registers with a searchable Bluebeam PDF/CSV comments register, inline editing, and optional desktop app.",
+    status: "wip",
+    category: "Engineering tools",
+    region: "Internal",
+    stack: ["Next.js", "Prisma", "Electron"],
+  },
+  {
     id: "beyondstgeorges",
     name: "Beyond St Georges",
     url: "https://beyondstgeorges.com",
@@ -188,18 +199,7 @@ export const PROJECTS: PortfolioProject[] = [
     status: "live",
     category: "Advocacy",
     region: "Perth, Australia",
-    stack: ["Next.js", "Umami"],
-  },
-  {
-    id: "engineering-comments-register",
-    name: "Engineering Comments Register",
-    domain: "Private",
-    description:
-      "Internal PM toolkit that replaces spreadsheet comment registers with a searchable Bluebeam PDF/CSV comments register, inline editing, and optional desktop app.",
-    status: "private",
-    category: "Engineering tools",
-    region: "Internal",
-    stack: ["Next.js", "Prisma", "Electron"],
+    stack: ["Next.js"],
   },
 ];
 

@@ -15,48 +15,64 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px",
-          background: "linear-gradient(160deg, #05080c 0%, #0a1510 55%, #05080c 100%)",
-          color: "#d8ffe8",
-          fontFamily: "monospace",
+          background: "#ffffff",
+          color: "#0a0a0a",
+          fontFamily: "system-ui, sans-serif",
+          border: "12px solid #0a0a0a",
         }}
       >
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            fontSize: 28,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "#39ffa0",
+            alignItems: "baseline",
+            gap: "8px",
+            fontSize: 42,
+            fontWeight: 800,
           }}
         >
-          <div
+          <span>Seal</span>
+          <span
             style={{
-              width: 14,
-              height: 14,
-              background: "#39ffa0",
-              boxShadow: "0 0 18px rgba(57,255,160,0.8)",
+              background: "#f5b48a",
+              color: "#3a2214",
+              border: "3px solid #0a0a0a",
+              borderRadius: 10,
+              padding: "4px 14px",
             }}
-          />
-          SEAL LABS
+          >
+            Labs
+          </span>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <div
             style={{
               fontSize: 52,
+              fontWeight: 800,
               lineHeight: 1.1,
               maxWidth: 920,
-              color: "#39ffa0",
             }}
           >
-            {">_ ./build --target production"}
+            Production SaaS that ships and stays up
           </div>
-          <div style={{ fontSize: 26, color: "#6f8f7c", maxWidth: 820 }}>
-            identity · hiring · field ops · education · apis
+          <div style={{ fontSize: 26, color: "#525252", maxWidth: 820 }}>
+            Identity · hiring · field ops · education · APIs
           </div>
         </div>
-        <div style={{ fontSize: 22, color: "#5ce1ff" }}>seallabs.io</div>
+        <div
+          style={{
+            fontSize: 24,
+            fontWeight: 700,
+            background: "#f5b48a",
+            color: "#3a2214",
+            border: "3px solid #0a0a0a",
+            borderRadius: 12,
+            padding: "10px 18px",
+            alignSelf: "flex-start",
+            boxShadow: "6px 6px 0 0 #0a0a0a",
+          }}
+        >
+          seallabs.io
+        </div>
       </div>
     ),
     { ...size },

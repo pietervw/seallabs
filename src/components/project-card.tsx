@@ -1,8 +1,12 @@
-import Link from "next/link";
-
-import { ProjectCardBody } from "@/components/project-card-body";
+import {
+  ProjectCardBody,
+  projectCardClass,
+} from "@/components/project-card-body";
 import { TenantProjectCard } from "@/components/tenant-project-card";
+import { Button } from "@/components/ui/button";
+import { Container, Section, SectionHeading } from "@/components/ui/section";
 import type { PortfolioProject } from "@/lib/projects";
+import { cn } from "@/lib/utils";
 
 type ProjectCardProps = {
   project: PortfolioProject;
@@ -14,10 +18,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
   }
 
   const cta = project.url ? (
-    <span className="project-card__cta">open →</span>
+    <span className="mt-auto pt-5 font-display text-sm font-bold text-ink">
+      Open →
+    </span>
   ) : (
-    <span className="project-card__cta project-card__cta--muted">
-      no public link
+    <span className="mt-auto pt-5 font-display text-sm font-bold text-ink-muted">
+      No public link
     </span>
   );
 
@@ -25,7 +31,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
     return (
       <a
         href={project.url}
-        className="project-card project-card--link"
+        className={cn(
+          projectCardClass,
+          "hover:-translate-x-px hover:-translate-y-px hover:shadow-brutal-lg",
+        )}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -36,7 +45,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   }
 
   return (
-    <article className="project-card">
+    <article className={projectCardClass}>
       <ProjectCardBody project={project} />
       {cta}
     </article>
@@ -49,7 +58,7 @@ type ProjectGridProps = {
 
 export function ProjectGrid({ projects }: ProjectGridProps) {
   return (
-    <div className="project-grid">
+    <div className="grid gap-6 sm:grid-cols-2">
       {projects.map((project) => (
         <ProjectCard key={project.id} project={project} />
       ))}
@@ -61,20 +70,23 @@ export function FeaturedWorkTeaser({ projects }: ProjectGridProps) {
   if (projects.length === 0) return null;
 
   return (
-    <section className="section" aria-labelledby="featured-work-heading">
-      <div className="shell">
-        <div className="section__intro">
-          <p className="eyebrow">ls ./work</p>
-          <h2 id="featured-work-heading">Featured</h2>
-          <p className="lede">Portfolio of work</p>
-        </div>
+    <Section
+      className="border-t-2 border-ink bg-paper-muted"
+      aria-labelledby="featured-work-heading"
+    >
+      <Container>
+        <SectionHeading
+          id="featured-work-heading"
+          title="Featured work"
+          description="A selection of Seal Labs products in production."
+        />
         <ProjectGrid projects={projects} />
-        <div className="section__action">
-          <Link href="/work" className="btn btn--ghost">
-            ./work --all
-          </Link>
+        <div className="mt-10 flex justify-center">
+          <Button href="/work" variant="secondary">
+            See all work
+          </Button>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

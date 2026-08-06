@@ -9,7 +9,6 @@ const PAGE_KEYS: MarketingPageKey[] = [
   "home",
   "work",
   "services",
-  "about",
   "contact",
 ];
 

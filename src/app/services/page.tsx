@@ -1,7 +1,7 @@
-import Link from "next/link";
-
 import { JsonLd } from "@/components/json-ld";
 import { MarketingShell } from "@/components/marketing-shell";
+import { Button } from "@/components/ui/button";
+import { Container, PageIntro, Section } from "@/components/ui/section";
 import {
   createMarketingMetadata,
   createProfessionalServiceStructuredData,
@@ -16,16 +16,16 @@ const SERVICES = [
     body: "Auth, billing, multi-tenancy, dashboards. Ship it. Run it.",
   },
   {
-    title: "Identity systems",
-    body: "ID checks, API tiers, freemium funnels for markets that need verification.",
+    title: "Systems integration",
+    body: "Use of APIs and webhooks to configure systems integration",
   },
   {
     title: "Field ops",
-    body: "QR workflows, evidence capture, audit trails that survive the field.",
+    body: "QR codes, custom workflows, evidence capture and audit trails",
   },
   {
-    title: "APIs",
-    body: "Lookup APIs, webhooks, SDKs other systems can depend on.",
+    title: "AI and Automation",
+    body: "Implement AI in your business, with custom built automations to suit your needs",
   },
 ] as const;
 
@@ -39,33 +39,37 @@ export default function ServicesPage() {
         ]}
       />
 
-      <section className="section">
-        <div className="shell">
-          <div className="section__intro">
-            <p className="eyebrow">man seallabs</p>
-            <h1>Services</h1>
-            <p className="lede">Build. Deploy. Operate. No deck theatre.</p>
-          </div>
+      <Section>
+        <Container>
+          <PageIntro
+            title="Services"
+            description="Build, deploy, and operate production systems — without the slide deck theatre."
+          />
 
-          <div className="service-grid">
+          <div className="grid gap-6 sm:grid-cols-2">
             {SERVICES.map((service) => (
-              <article key={service.title} className="service-item">
-                <h2>{service.title}</h2>
-                <p>{service.body}</p>
+              <article
+                key={service.title}
+                className="rounded-2xl border-2 border-ink bg-paper p-6 shadow-brutal"
+              >
+                <h2 className="font-display text-xl font-extrabold text-ink">
+                  {service.title}
+                </h2>
+                <p className="mt-3 text-ink-muted">{service.body}</p>
               </article>
             ))}
           </div>
 
-          <div className="btn-row">
-            <Link href="/contact" className="btn btn--primary">
-              ./contact
-            </Link>
-            <Link href="/work" className="btn btn--ghost">
-              ./work
-            </Link>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Button href="/contact" size="lg">
+              Contact
+            </Button>
+            <Button href="/work" variant="secondary" size="lg">
+              View work
+            </Button>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </MarketingShell>
   );
 }
