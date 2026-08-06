@@ -17,7 +17,7 @@ const SERVICES = [
   },
   {
     title: "Systems integration",
-    body: "Use of APIs and webhooks to configure systems integration",
+    body: "Use APIs and webhooks to configure systems integration.",
   },
   {
     title: "Field ops",
@@ -25,7 +25,7 @@ const SERVICES = [
   },
   {
     title: "AI and Automation",
-    body: "Implement AI in your business, with custom built automations to suit your needs",
+    body: "Implement AI in your business, with custom-built automations to suit your needs",
   },
 ] as const;
 
