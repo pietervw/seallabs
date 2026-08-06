@@ -131,6 +131,18 @@ export const PROJECTS: PortfolioProject[] = [
     featured: true,
   },
   {
+    id: "indiedevtest",
+    name: "IndieDevTest",
+    url: "https://indiedevtest.com",
+    domain: "indiedevtest.com",
+    description:
+      "Reciprocal testing community for indie Android and iOS developers — match peers, exchange builds, and meet store tester requirements.",
+    status: "live",
+    category: "Community",
+    region: "Global",
+    stack: ["Next.js", "SendGrid", "Cloudflare R2"],
+  },
+  {
     id: "trueid-zim",
     name: "TrueID Zim",
     url: "https://trueidzim.com",
@@ -153,18 +165,6 @@ export const PROJECTS: PortfolioProject[] = [
     category: "Healthcare API",
     region: "United States",
     stack: ["API", "TypeScript", ".NET", "C#"],
-  },
-  {
-    id: "indiedevtest",
-    name: "IndieDevTest",
-    url: "https://indiedevtest.com",
-    domain: "indiedevtest.com",
-    description:
-      "Reciprocal testing community for indie Android and iOS developers — match peers, exchange builds, and meet store tester requirements.",
-    status: "live",
-    category: "Community",
-    region: "Global",
-    stack: ["Next.js", "SendGrid", "Cloudflare R2"],
   },
   {
     id: "ibreatheonline",
