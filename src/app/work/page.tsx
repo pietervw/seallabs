@@ -1,6 +1,7 @@
 import { JsonLd } from "@/components/json-ld";
 import { MarketingShell } from "@/components/marketing-shell";
 import { ProjectGrid } from "@/components/project-card";
+import { Container, PageIntro, Section } from "@/components/ui/section";
 import { PROJECTS } from "@/lib/projects";
 import {
   createItemListStructuredData,
@@ -26,16 +27,15 @@ export default function WorkPage() {
         ]}
       />
 
-      <section className="section">
-        <div className="shell">
-          <div className="section__intro">
-            <p className="eyebrow">ls -la ./products</p>
-            <h1>Work</h1>
-            <p className="lede">Live links where public. Private where noted.</p>
-          </div>
+      <Section>
+        <Container>
+          <PageIntro
+            title="Work"
+            description="Live links where public. WIP marked where still shipping."
+          />
           <ProjectGrid projects={PROJECTS} />
-        </div>
-      </section>
+        </Container>
+      </Section>
     </MarketingShell>
   );
 }

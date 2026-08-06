@@ -1,22 +1,39 @@
+import { Badge } from "@/components/ui/badge";
 import type { PortfolioProject } from "@/lib/projects";
+
+export const projectCardClass =
+  "flex h-full flex-col rounded-2xl border-2 border-ink bg-paper p-6 text-left shadow-brutal transition-transform duration-150";
 
 export function ProjectCardBody({ project }: { project: PortfolioProject }) {
   return (
     <>
-      <div className="project-card__meta">
-        <span className="project-card__category">{project.category}</span>
-        <span
-          className={`project-card__status project-card__status--${project.status}`}
-        >
-          {project.status === "private" ? "private" : project.status}
-        </span>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <Badge variant="muted">{project.category}</Badge>
+        <Badge variant={project.status === "live" ? "brand" : "outline"}>
+          {project.status === "wip" ? (
+            <>
+              <span aria-hidden="true">wip</span>
+              <span className="sr-only">work in progress</span>
+            </>
+          ) : (
+            project.status
+          )}
+        </Badge>
       </div>
-      <h3 className="project-card__title">{project.name}</h3>
-      <p className="project-card__domain">{project.domain}</p>
-      <p className="project-card__description">{project.description}</p>
-      <ul className="project-card__stack" aria-label="Tech stack">
+      <h3 className="font-display text-xl font-extrabold text-ink">
+        {project.name}
+      </h3>
+      <p className="mt-1 text-sm font-semibold text-ink-muted">
+        {project.domain}
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-ink-muted">
+        {project.description}
+      </p>
+      <ul className="mt-4 flex flex-wrap gap-2" aria-label="Tech stack">
         {project.stack.map((item) => (
-          <li key={item}>{item}</li>
+          <li key={item}>
+            <Badge variant="muted">{item}</Badge>
+          </li>
         ))}
       </ul>
     </>

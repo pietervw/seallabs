@@ -9,7 +9,6 @@ const PAGE_KEYS: MarketingPageKey[] = [
   "home",
   "work",
   "services",
-  "about",
   "contact",
 ];
 
@@ -47,7 +46,7 @@ export function GET(): Response {
     } else if (project.url) {
       lines.push(`- [${project.name}](${project.url}): ${project.description}`);
     } else {
-      lines.push(`- ${project.name} (private): ${project.description}`);
+      lines.push(`- ${project.name} (no public URL): ${project.description}`);
     }
   }
 

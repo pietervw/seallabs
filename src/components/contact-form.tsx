@@ -2,7 +2,14 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 
+import { Button } from "@/components/ui/button";
+import {
+  AnalyticsEvents,
+  trackActivationOnce,
+  trackEvent,
+} from "@/lib/analytics";
 import { TURNSTILE_SITE_KEY } from "@/lib/public-config";
+import { cn } from "@/lib/utils";
 
 declare global {
   interface Window {
@@ -25,6 +32,9 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 const TURNSTILE_UNAVAILABLE =
   "Security check unavailable. Please refresh or email us directly.";
+
+const fieldClass =
+  "w-full rounded-xl border-2 border-ink bg-paper px-4 py-3 font-medium text-ink shadow-brutal outline-none transition-shadow placeholder:text-ink-muted focus:shadow-brutal-brand-lg disabled:opacity-50";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -129,6 +139,11 @@ export function ContactForm() {
       }
 
       setStatus("success");
+      const honeypot = String(data.get("website") || "").trim();
+      if (!honeypot) {
+        trackActivationOnce({ source: "contact_form" });
+        trackEvent(AnalyticsEvents.VALUE_DELIVERED, { source: "contact_form" });
+      }
       setMessage("Thanks — we will reply within one business day.");
       form.reset();
       setTurnstileToken("");
@@ -140,39 +155,84 @@ export function ContactForm() {
   }
 
   return (
-    <form className="contact-form" onSubmit={onSubmit} noValidate>
+    <form
+      className="flex flex-col gap-5 rounded-2xl border-2 border-ink bg-paper p-6 shadow-brutal"
+      onSubmit={onSubmit}
+      noValidate
+    >
       <input
         type="text"
         name="website"
         tabIndex={-1}
         autoComplete="off"
-        className="hp"
+        className="sr-only"
         aria-hidden="true"
       />
 
-      <div className="field">
-        <label htmlFor="name">Name</label>
-        <input id="name" name="name" type="text" required maxLength={120} />
+      <div>
+        <label
+          htmlFor="name"
+          className="mb-1.5 block text-sm font-semibold text-ink"
+        >
+          Name
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          maxLength={120}
+          className={fieldClass}
+        />
       </div>
 
-      <div className="field">
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" required maxLength={200} />
+      <div>
+        <label
+          htmlFor="email"
+          className="mb-1.5 block text-sm font-semibold text-ink"
+        >
+          Email
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          maxLength={200}
+          className={fieldClass}
+        />
       </div>
 
-      <div className="field">
-        <label htmlFor="company">Company (optional)</label>
-        <input id="company" name="company" type="text" maxLength={160} />
+      <div>
+        <label
+          htmlFor="company"
+          className="mb-1.5 block text-sm font-semibold text-ink"
+        >
+          Company (optional)
+        </label>
+        <input
+          id="company"
+          name="company"
+          type="text"
+          maxLength={160}
+          className={fieldClass}
+        />
       </div>
 
-      <div className="field">
-        <label htmlFor="message">How can we help?</label>
+      <div>
+        <label
+          htmlFor="message"
+          className="mb-1.5 block text-sm font-semibold text-ink"
+        >
+          How can we help?
+        </label>
         <textarea
           id="message"
           name="message"
           required
           rows={6}
           maxLength={5000}
+          className={cn(fieldClass, "resize-y")}
         />
       </div>
 
@@ -180,20 +240,22 @@ export function ContactForm() {
         <div className="cf-turnstile" ref={turnstileRef} />
       ) : null}
 
-      <button
+      <Button
         type="submit"
-        className="btn btn--primary"
         disabled={
           status === "submitting" ||
           Boolean(TURNSTILE_SITE_KEY && !turnstileToken)
         }
       >
-        {status === "submitting" ? "sending…" : "./send"}
-      </button>
+        {status === "submitting" ? "Sending…" : "Send"}
+      </Button>
 
       {message ? (
         <p
-          className={`form-status form-status--${status}`}
+          className={cn(
+            "text-sm font-semibold",
+            status === "error" ? "text-red-600" : "text-ink",
+          )}
           role="status"
           aria-live="polite"
         >

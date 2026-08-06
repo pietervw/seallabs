@@ -1,5 +1,12 @@
 import type { NextConfig } from "next";
 
+const STATIC_ASSET_CACHE = [
+  {
+    key: "Cache-Control",
+    value: "public, max-age=31536000, immutable",
+  },
+] as const;
+
 const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
@@ -11,10 +18,19 @@ const nextConfig: NextConfig = {
         destination: "https://seallabs.io/:path*",
         permanent: true,
       },
+      {
+        source: "/about",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
   async headers() {
     return [
+      {
+        source: "/:file(logo-mascot|seallabs-box).png",
+        headers: [...STATIC_ASSET_CACHE],
+      },
       {
         source: "/(.*)",
         headers: [
