@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
         destination: "https://seallabs.io/:path*",
         permanent: true,
       },
+      {
+        source: "/about",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
   async headers() {
