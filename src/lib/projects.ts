@@ -19,6 +19,8 @@ export type PortfolioProject = {
   region: string;
   stack: string[];
   featured?: boolean;
+  /** Shown under Experiments and community projects on the work page. */
+  experiment?: boolean;
   /** Multi-tenant products: card opens a modal listing these for SEO click-through. */
   tenants?: ProjectTenant[];
 };
@@ -94,7 +96,7 @@ export const PROJECTS: PortfolioProject[] = [
   {
     id: "schoolreports-multi",
     name: "School Reports",
-    domain: "multi-tenanted codebase",
+    domain: "multi-tenant codebase",
     description:
       "AI report-comment generator for teachers. AI trained and curriculum-aligned for each Australian state and New Zealand.",
     status: "live",
@@ -123,7 +125,7 @@ export const PROJECTS: PortfolioProject[] = [
     url: "https://sealats.com",
     domain: "sealats.com",
     description:
-      "Multi-tenant applicant tracking for SME's. Simplify hiring with job boards, candidate pipelines and onboarding.",
+      "Multi-tenant applicant tracking for SMEs. Simplify hiring with job boards, candidate pipelines and onboarding.",
     status: "wip",
     category: "Hiring",
     region: "AU / NZ",
@@ -177,6 +179,7 @@ export const PROJECTS: PortfolioProject[] = [
     category: "Wellness",
     region: "Global",
     stack: ["Next.js", "Tailwind"],
+    experiment: true,
   },
   {
     id: "engineering-comments-register",
@@ -188,6 +191,7 @@ export const PROJECTS: PortfolioProject[] = [
     category: "Engineering tools",
     region: "Internal",
     stack: ["Next.js", "Prisma", "Electron"],
+    experiment: true,
   },
   {
     id: "beyondstgeorges",
@@ -200,11 +204,20 @@ export const PROJECTS: PortfolioProject[] = [
     category: "Advocacy",
     region: "Perth, Australia",
     stack: ["Next.js"],
+    experiment: true,
   },
 ];
 
 export function getFeaturedProjects(): PortfolioProject[] {
   return PROJECTS.filter((p) => p.featured);
+}
+
+export function getPrimaryProjects(): PortfolioProject[] {
+  return PROJECTS.filter((p) => !p.experiment);
+}
+
+export function getExperimentProjects(): PortfolioProject[] {
+  return PROJECTS.filter((p) => p.experiment);
 }
 
 export type PublicProductEntry = {

@@ -15,6 +15,7 @@ type SiteHeaderProps = {
 };
 
 function isActive(currentPath: string, href: string): boolean {
+  if (href.startsWith("/#")) return false;
   if (href === "/") return currentPath === "/";
   return currentPath === href || currentPath.startsWith(`${href}/`);
 }

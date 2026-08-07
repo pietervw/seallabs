@@ -1,8 +1,13 @@
+import { ExperimentsAccordion } from "@/components/experiments-accordion";
 import { JsonLd } from "@/components/json-ld";
 import { MarketingShell } from "@/components/marketing-shell";
 import { ProjectGrid } from "@/components/project-card";
 import { Container, PageIntro, Section } from "@/components/ui/section";
-import { PROJECTS } from "@/lib/projects";
+import {
+  PROJECTS,
+  getExperimentProjects,
+  getPrimaryProjects,
+} from "@/lib/projects";
 import {
   createItemListStructuredData,
   createMarketingMetadata,
@@ -13,6 +18,8 @@ import {
 export const metadata = createMarketingMetadata("work");
 
 export default function WorkPage() {
+  const primary = getPrimaryProjects();
+  const experiments = getExperimentProjects();
   const softwareApps = PROJECTS.map(createSoftwareApplicationStructuredData).filter(
     (item): item is NonNullable<typeof item> => item !== null,
   );
@@ -33,7 +40,8 @@ export default function WorkPage() {
             title="Work"
             description="Live links where public. WIP marked where still shipping."
           />
-          <ProjectGrid projects={PROJECTS} />
+          <ProjectGrid projects={primary} />
+          <ExperimentsAccordion projects={experiments} />
         </Container>
       </Section>
     </MarketingShell>

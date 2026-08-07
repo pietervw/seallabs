@@ -50,7 +50,8 @@ export default function HomePage() {
               </span>
             </h1>
             <p className="mt-5 max-w-xl text-lg text-ink-muted md:text-xl">
-              We build custom software solutions that drive business value.
+              Custom software for businesses that have outgrown off-the-shelf
+              tools.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href="/work" size="lg">
@@ -84,6 +85,27 @@ export default function HomePage() {
       </section>
 
       <FeaturedWorkTeaser projects={featured} />
+
+      <section
+        id="about"
+        className="scroll-mt-20 border-t-2 border-ink bg-paper py-16 md:py-24"
+        aria-labelledby="about-heading"
+      >
+        <Container>
+          <h2
+            id="about-heading"
+            className="font-display text-3xl font-extrabold text-ink md:text-5xl"
+          >
+            About
+          </h2>
+          <p className="mt-6 max-w-3xl text-lg text-ink-muted md:text-xl">
+            Seal Labs is an independent software studio operating from Perth by
+            a senior software developer with 15+ years of experience building
+            and operating production systems across .NET, Azure, Next.js, React
+            and PostgreSQL.
+          </p>
+        </Container>
+      </section>
     </MarketingShell>
   );
 }

@@ -17,15 +17,15 @@ const SERVICES = [
   },
   {
     title: "Systems integration",
-    body: "Use APIs and webhooks to configure systems integration.",
+    body: "Connect disconnected platforms using APIs, webhooks, scheduled jobs and event-driven workflows. We can integrate CRMs, payment providers, identity services, internal databases and third-party SaaS platforms.",
   },
   {
     title: "Field ops",
     body: "QR codes, custom workflows, evidence capture and audit trails",
   },
   {
-    title: "AI and Automation",
-    body: "Implement AI in your business, with custom-built automations to suit your needs",
+    title: "AI and automation",
+    body: "Practical AI embedded into real workflows, with custom-built automations to suit your need",
   },
 ] as const;
 
@@ -43,7 +43,7 @@ export default function ServicesPage() {
         <Container>
           <PageIntro
             title="Services"
-            description="Build, deploy, and operate production systems — without the slide deck theatre."
+            description="Seal Labs designs and builds SaaS products, internal tools, integrations and AI-powered workflows—from first prototype through to deployment and operation."
           />
 
           <div className="grid gap-6 sm:grid-cols-2">
