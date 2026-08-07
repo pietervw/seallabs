@@ -39,10 +39,10 @@ export default function HomePage() {
           aria-hidden="true"
         />
         <Container className="relative py-16 md:py-28">
-          <div className="mx-auto max-w-3xl text-center md:mx-0 md:max-w-2xl md:text-left">
+          <div className="mx-auto max-w-2xl text-center">
             <BrandMark
               size="hero"
-              className="mb-6 justify-center md:justify-start"
+              className="mb-6 justify-center"
               showMascot={false}
               linked={false}
             />
@@ -56,7 +56,7 @@ export default function HomePage() {
               Custom software for businesses that have outgrown off-the-shelf
               tools.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center md:justify-start">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
               <Button href="/work" size="lg" className="w-full sm:w-auto">
                 View work
               </Button>
