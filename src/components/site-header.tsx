@@ -66,7 +66,11 @@ export function SiteHeader({ currentPath = "/" }: SiteHeaderProps) {
           aria-expanded={open}
           aria-controls={menuId}
           aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((value) => !value)}
+          onClick={() => {
+            const next = !open;
+            if (next) window.scrollTo({ top: 0, behavior: "instant" });
+            setOpen(next);
+          }}
         >
           <span className="flex w-5 flex-col gap-1" aria-hidden="true">
             <span
@@ -93,7 +97,7 @@ export function SiteHeader({ currentPath = "/" }: SiteHeaderProps) {
 
       {open ? (
         <div
-          className="fixed inset-0 z-40 bg-ink/40 md:hidden"
+          className="fixed inset-x-0 top-16 bottom-0 z-40 bg-ink/40 md:hidden"
           aria-hidden="true"
           onClick={onClose}
         />
