@@ -18,7 +18,7 @@ export default function PrivacyPolicy() {
           Privacy Policy
         </h1>
         <p className="mt-4 text-sm text-slate-500">For Sirens Emulator</p>
-        <p className="mt-1 text-sm text-slate-500">Effective date: July 27, 2026</p>
+        <p className="mt-1 text-sm text-slate-500">Effective date: August 11, 2026</p>
 
         <div className="mt-10 space-y-9 text-[15px] leading-7 text-slate-600">
           <section>
@@ -34,21 +34,45 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="mb-3 text-xl font-semibold text-slate-950">2. Information we collect</h2>
             <p>
-              Sirens Emulator does not collect, sell, share, or transmit personal
-              information. The app has no user accounts, advertising, analytics,
-              location tracking, contacts access, microphone recording, or
-              server-based service.
+              Sirens Emulator does not require an account and does not collect
+              your name, email address, contacts, advertising ID, photos, video,
+              microphone recordings, or precise GPS location. The app contains
+              no advertising and does not sell personal information.
             </p>
             <p className="mt-4">
-              The app stores your choices—such as sound, light, timing, and
-              disclaimer settings—locally on your device using the device&apos;s
-              local preferences storage. These settings are not sent to Seal
-              Labs or to third parties.
+              The app sends limited usage analytics to a self-hosted Umami
+              service operated by Seal Labs. These analytics include app screen
+              views and actions such as acknowledging the disclaimer, opening or
+              saving settings, and starting or stopping an effect. Event details
+              may include the selected sound, visual colour, animation speed,
+              camera LED mode, delay, duration, keep-screen-on choice, whether a
+              feature succeeded, and a general error type. They do not contain
+              user-entered content because the app has no free-text input.
+            </p>
+            <p className="mt-4">
+              Analytics requests also contain the device language, screen
+              resolution, a general platform user-agent, and normal connection
+              information such as the IP address received by the server. Umami
+              may use the IP address to estimate an approximate country, region,
+              or city. The app does not request location permission or access
+              GPS coordinates.
             </p>
           </section>
 
           <section>
-            <h2 className="mb-3 text-xl font-semibold text-slate-950">3. Device permissions</h2>
+            <h2 className="mb-3 text-xl font-semibold text-slate-950">3. Local information</h2>
+            <p>
+              Your selected sound, light, animation, camera LED, delay, duration,
+              keep-screen-on, and disclaimer choices are stored in local app
+              preferences so they can be restored the next time you open the
+              app. These local preferences stay on your device unless included
+              in a device backup managed by your operating system or backup
+              provider.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="mb-3 text-xl font-semibold text-slate-950">4. Device permissions</h2>
             <ul className="list-disc space-y-2 pl-6">
               <li>
                 <strong>Camera:</strong> optional and used only to operate the
@@ -73,30 +97,39 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="mb-3 text-xl font-semibold text-slate-950">4. Sharing and security</h2>
+            <h2 className="mb-3 text-xl font-semibold text-slate-950">5. How information is used and shared</h2>
             <p>
-              Because the app does not transmit personal information, it does
-              not share personal information with Seal Labs, service providers,
-              advertisers, or other third parties. We nevertheless use the
-              platform&apos;s normal permission and storage controls to help protect
-              the app&apos;s local data. No method of storage is completely secure.
+              Seal Labs uses analytics only to understand feature usage, improve
+              the app, and diagnose reliability problems. Analytics are sent to
+              <strong> oumatjie.slouchypete.dev</strong>, the developer&apos;s
+              self-hosted Umami instance. We do not use this information for
+              advertising or sell it. Infrastructure providers may process
+              connection information on our behalf where necessary to host and
+              secure the analytics service, or where disclosure is required by
+              law.
+            </p>
+            <p className="mt-4">
+              We use reasonable technical and organisational safeguards, but no
+              transmission or storage system can be guaranteed completely secure.
             </p>
           </section>
 
           <section>
-            <h2 className="mb-3 text-xl font-semibold text-slate-950">5. Retention and deletion</h2>
+            <h2 className="mb-3 text-xl font-semibold text-slate-950">6. Retention and your choices</h2>
             <p>
               Local preferences remain on your device until you clear the app&apos;s
-              data, reset the app, or uninstall it. Since Sirens Emulator does
-              not maintain accounts or remote personal-data records, there is no
-              server-side account or personal profile to delete. You can contact
-              us if you have a privacy question or believe the app has handled
-              information unexpectedly.
+              data or uninstall it. Analytics are retained only for as long as
+              reasonably needed for product analysis, reliability, security, and
+              legal obligations. Because the app has no account and analytics are
+              not linked to your name or email address, we may not be able to
+              identify a particular analytics record as yours. You may still
+              contact us with an access or deletion request, and we will respond
+              as required by applicable law.
             </p>
           </section>
 
           <section>
-            <h2 className="mb-3 text-xl font-semibold text-slate-950">6. Children&apos;s privacy</h2>
+            <h2 className="mb-3 text-xl font-semibold text-slate-950">7. Children&apos;s privacy</h2>
             <p>
               Sirens Emulator is not directed to children under 13, and we do
               not knowingly collect personal information from children.
@@ -104,7 +137,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="mb-3 text-xl font-semibold text-slate-950">7. Changes to this policy</h2>
+            <h2 className="mb-3 text-xl font-semibold text-slate-950">8. Changes to this policy</h2>
             <p>
               If the app&apos;s data practices change, we will update this policy on
               this page before or when the change is released and update the
@@ -113,7 +146,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="mb-3 text-xl font-semibold text-slate-950">8. Contact</h2>
+            <h2 className="mb-3 text-xl font-semibold text-slate-950">9. Contact</h2>
             <p>
               Seal Labs is the developer of Sirens Emulator. For privacy
               questions, contact{" "}
