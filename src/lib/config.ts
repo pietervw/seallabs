@@ -25,7 +25,7 @@ export const SITE_LEGAL_NAME =
 export const SITE_TAGLINE =
   "No seals were harmed in the making of this website.";
 export const SITE_DESCRIPTION =
-  "Seal Labs ships production software systems: education SaaS, identity verification, applicant tracking, field audit workflows, and APIs.";
+  "Seal Labs is a Perth software development studio building custom SaaS, APIs, identity systems, and field operations software for businesses worldwide.";
 export const SITE_LOCALE = "en_AU";
 export const SUPPORT_EMAIL =
   process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || "hello@seallabs.io";
