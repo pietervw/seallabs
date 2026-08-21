@@ -21,6 +21,8 @@ export type PortfolioProject = {
   featured?: boolean;
   /** Shown under Experiments and community projects on the work page. */
   experiment?: boolean;
+  /** Omit from public portfolio listings while keeping data in PROJECTS. */
+  unlisted?: boolean;
   /** Multi-tenant products: card opens a modal listing these for SEO click-through. */
   tenants?: ProjectTenant[];
 };
@@ -82,7 +84,7 @@ export const SCHOOL_REPORT_TENANTS: ProjectTenant[] = [
 export const PROJECTS: PortfolioProject[] = [
   {
     id: "checkid",
-    name: "CheckID",
+    name: "CheckID - South African ID validator",
     url: "https://checkid.co.za",
     domain: "checkid.co.za",
     description:
@@ -91,6 +93,19 @@ export const PROJECTS: PortfolioProject[] = [
     category: "Identity",
     region: "South Africa",
     stack: ["Next.js", "Prisma", "Clerk", "Stripe", "microservices", ".NET", "API"],
+    featured: true,
+  },
+  {
+    id: "sealaudit",
+    name: "SealAudit",
+    url: "https://sealaudit.com",
+    domain: "sealaudit.com",
+    description:
+      "Custom QR workflows for field teams with a complete audit trail — capture timestamped evidence and exportable records for audits and handovers.",
+    status: "live",
+    category: "Field operations",
+    region: "Global",
+    stack: ["Next.js", "PostgreSQL", "Clerk", "Stripe", "Cloudflare R2"],
     featured: true,
   },
   {
@@ -107,30 +122,29 @@ export const PROJECTS: PortfolioProject[] = [
     tenants: SCHOOL_REPORT_TENANTS,
   },
   {
-    id: "sealaudit",
-    name: "SealAudit",
-    url: "https://sealaudit.com",
-    domain: "sealaudit.com",
+    id: "engineering-comments-register",
+    name: "Engineering Comments Register",
+    domain: "Private",
     description:
-      "Custom QR workflows for field teams with a complete audit trail — capture timestamped evidence and exportable records for audits and handovers.",
-    status: "live",
-    category: "Field operations",
-    region: "Global",
-    stack: ["Next.js", "PostgreSQL", "Clerk", "Stripe", "Cloudflare R2"],
+      "Internal PM toolkit that replaces spreadsheet comment registers with a searchable Bluebeam PDF/CSV comments register, inline editing, and optional desktop app.",
+    status: "wip",
+    category: "Engineering tools",
+    region: "Internal",
+    stack: ["Next.js", "Prisma", "Electron"],
     featured: true,
+    experiment: true,
   },
   {
-    id: "seal-ats",
-    name: "Seal ATS",
-    url: "https://sealats.com",
-    domain: "sealats.com",
+    id: "npi-api",
+    name: "US Health Provider API",
+    url: "https://healthproviderapi.com",
+    domain: "healthproviderapi.com",
     description:
-      "Multi-tenant applicant tracking for SMEs. Simplify hiring with job boards, candidate pipelines and onboarding.",
-    status: "wip",
-    category: "Hiring",
-    region: "AU / NZ",
-    stack: [".NET", "React", "PostgreSQL", "Clerk", "Stripe"],
-    featured: true,
+      "Programmatic US NPPES / NPI lookup, provider search, and bulk lookup for onboarding, credentialing, billing, and directory integrations.",
+    status: "live",
+    category: "Healthcare API",
+    region: "United States",
+    stack: ["API", "TypeScript", ".NET", "C#"],
   },
   {
     id: "indiedevtest",
@@ -157,18 +171,6 @@ export const PROJECTS: PortfolioProject[] = [
     stack: ["Next.js", "Clerk", "Stripe"],
   },
   {
-    id: "npi-api",
-    name: "US Health Provider API",
-    url: "https://healthproviderapi.com",
-    domain: "healthproviderapi.com",
-    description:
-      "Programmatic US NPPES / NPI lookup, provider search, and bulk lookup for onboarding, credentialing, billing, and directory integrations.",
-    status: "live",
-    category: "Healthcare API",
-    region: "United States",
-    stack: ["API", "TypeScript", ".NET", "C#"],
-  },
-  {
     id: "ibreatheonline",
     name: "iBreathe Online",
     url: "https://ibreatheonline.com",
@@ -182,18 +184,6 @@ export const PROJECTS: PortfolioProject[] = [
     experiment: true,
   },
   {
-    id: "engineering-comments-register",
-    name: "Engineering Comments Register",
-    domain: "Private",
-    description:
-      "Internal PM toolkit that replaces spreadsheet comment registers with a searchable Bluebeam PDF/CSV comments register, inline editing, and optional desktop app.",
-    status: "wip",
-    category: "Engineering tools",
-    region: "Internal",
-    stack: ["Next.js", "Prisma", "Electron"],
-    experiment: true,
-  },
-  {
     id: "beyondstgeorges",
     name: "Beyond St Georges",
     url: "https://beyondstgeorges.com",
@@ -204,20 +194,36 @@ export const PROJECTS: PortfolioProject[] = [
     category: "Advocacy",
     region: "Perth, Australia",
     stack: ["Next.js"],
-    experiment: true,
+    unlisted: true,
+  },
+  {
+    id: "seal-ats",
+    name: "Seal ATS",
+    url: "https://sealats.com",
+    domain: "sealats.com",
+    description:
+      "Multi-tenant applicant tracking for SMEs. Simplify hiring with job boards, candidate pipelines and onboarding.",
+    status: "wip",
+    category: "Hiring",
+    region: "AU / NZ",
+    stack: [".NET", "React", "PostgreSQL", "Clerk", "Stripe"],
   },
 ];
 
+export function getListedProjects(): PortfolioProject[] {
+  return PROJECTS.filter((p) => !p.unlisted);
+}
+
 export function getFeaturedProjects(): PortfolioProject[] {
-  return PROJECTS.filter((p) => p.featured);
+  return getListedProjects().filter((p) => p.featured);
 }
 
 export function getPrimaryProjects(): PortfolioProject[] {
-  return PROJECTS.filter((p) => !p.experiment);
+  return getListedProjects().filter((p) => !p.experiment);
 }
 
 export function getExperimentProjects(): PortfolioProject[] {
-  return PROJECTS.filter((p) => p.experiment);
+  return getListedProjects().filter((p) => p.experiment);
 }
 
 export type PublicProductEntry = {
@@ -230,7 +236,7 @@ export type PublicProductEntry = {
 /** Flatten projects + tenants into public crawlable entries (skips entries without a public URL). */
 export function getPublicProductEntries(): PublicProductEntry[] {
   const entries: PublicProductEntry[] = [];
-  for (const project of PROJECTS) {
+  for (const project of getListedProjects()) {
     if (project.tenants?.length) {
       for (const tenant of project.tenants) {
         entries.push({

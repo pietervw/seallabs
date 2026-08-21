@@ -7,7 +7,7 @@ import {
   absoluteUrl,
   getSocialSameAs,
 } from "@/lib/config";
-import { PROJECTS, getPublicProductEntries } from "@/lib/projects";
+import { type PortfolioProject, getPublicProductEntries } from "@/lib/projects";
 
 export type StructuredData = Record<string, unknown>;
 
@@ -225,7 +225,7 @@ export function createItemListStructuredData(): StructuredData {
 }
 
 export function createSoftwareApplicationStructuredData(
-  project: (typeof PROJECTS)[number],
+  project: PortfolioProject,
 ): StructuredData | null {
   const url = project.tenants?.[0]?.url ?? project.url;
   if (!url) return null;

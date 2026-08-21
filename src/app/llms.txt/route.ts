@@ -1,5 +1,5 @@
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "@/lib/config";
-import { PROJECTS } from "@/lib/projects";
+import { getListedProjects } from "@/lib/projects";
 import { MARKETING_PAGES, getCanonicalUrl, type MarketingPageKey } from "@/lib/seo";
 
 export const dynamic = "force-static";
@@ -35,7 +35,7 @@ export function GET(): Response {
   }
 
   lines.push("", "## Products");
-  for (const project of PROJECTS) {
+  for (const project of getListedProjects()) {
     if (project.tenants?.length) {
       lines.push(`- ${project.name}: ${project.description}`);
       for (const tenant of project.tenants) {
