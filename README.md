@@ -18,7 +18,7 @@ Canonical origin is the **apex** domain (`https://seallabs.io`, no `www`). `www`
 | Robots | `/robots.txt` (`src/app/robots.ts`) |
 | LLM map | `/llms.txt` (`src/app/llms.txt/route.ts`) — [llmstxt.org](https://llmstxt.org/) |
 | Canonicals | Per-page via `createMarketingMetadata` |
-| Schema.org | Organization, WebSite, WebPage, ProfessionalService, ItemList, SoftwareApplication |
+| Schema.org | Organization, WebSite, WebPage, ProfessionalService, ItemList |
 
 Marketing page content is server-rendered so crawlers do not need JavaScript to read primary copy.
 

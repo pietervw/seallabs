@@ -7,7 +7,7 @@ import {
   absoluteUrl,
   getSocialSameAs,
 } from "@/lib/config";
-import { type PortfolioProject, getPublicProductEntries } from "@/lib/projects";
+import { getPublicProductEntries } from "@/lib/projects";
 
 export type StructuredData = Record<string, unknown>;
 
@@ -30,30 +30,32 @@ type MarketingPageSeo = {
 export const MARKETING_PAGES: Record<MarketingPageKey, MarketingPageSeo> = {
   home: {
     path: "/",
-    title: "Seal Labs | Software systems",
+    title: "Custom Software & SaaS Development | Seal Labs",
     description: SITE_DESCRIPTION,
     changeFrequency: "weekly",
     priority: 1,
   },
   work: {
     path: "/work",
-    title: "Work | Seal Labs",
+    title: "Software Products & Case Studies | Seal Labs",
     description:
-      "Seal Labs products — education SaaS, identity, ATS, field audit, APIs.",
+      "Explore production SaaS, identity verification, field operations, education, and API products built and operated by Seal Labs.",
     changeFrequency: "weekly",
     priority: 0.9,
   },
   services: {
     path: "/services",
-    title: "Services | Seal Labs",
-    description: "SaaS build, identity systems, field ops, APIs.",
+    title: "Custom Software Development Services | Seal Labs",
+    description:
+      "Custom SaaS development, APIs, multi-tenant platforms, identity systems, and field operations software from a Perth-based studio.",
     changeFrequency: "monthly",
     priority: 0.8,
   },
   contact: {
     path: "/contact",
     title: "Contact | Seal Labs",
-    description: "Contact Seal Labs.",
+    description:
+      "Talk to Seal Labs about custom software, SaaS, APIs, or modernising an operational workflow.",
     changeFrequency: "yearly",
     priority: 0.6,
   },
@@ -221,34 +223,5 @@ export function createItemListStructuredData(): StructuredData {
       url: item.url,
       description: item.description,
     })),
-  };
-}
-
-export function createSoftwareApplicationStructuredData(
-  project: PortfolioProject,
-): StructuredData | null {
-  const url = project.tenants?.[0]?.url ?? project.url;
-  if (!url) return null;
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: project.name,
-    url,
-    description: project.description,
-    applicationCategory: project.category,
-    operatingSystem: "Web",
-    ...(project.tenants?.length
-      ? { sameAs: project.tenants.map((tenant) => tenant.url) }
-      : {}),
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "AUD",
-      availability: "https://schema.org/InStock",
-    },
-    creator: {
-      "@id": `${getCanonicalUrl("/")}#organization`,
-    },
   };
 }

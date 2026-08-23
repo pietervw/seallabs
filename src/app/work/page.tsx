@@ -3,23 +3,18 @@ import { JsonLd } from "@/components/json-ld";
 import { MarketingShell } from "@/components/marketing-shell";
 import { ProjectGrid } from "@/components/project-card";
 import { Container, PageIntro, Section } from "@/components/ui/section";
-import { getListedProjects } from "@/lib/projects";
+import { getExperimentProjects, getPrimaryProjects } from "@/lib/projects";
 import {
   createItemListStructuredData,
   createMarketingMetadata,
-  createSoftwareApplicationStructuredData,
   createWebPageStructuredData,
 } from "@/lib/seo";
 
 export const metadata = createMarketingMetadata("work");
 
 export default function WorkPage() {
-  const listed = getListedProjects();
-  const primary = listed.filter((p) => !p.experiment);
-  const experiments = listed.filter((p) => p.experiment);
-  const softwareApps = listed.map(createSoftwareApplicationStructuredData).filter(
-    (item): item is NonNullable<typeof item> => item !== null,
-  );
+  const primary = getPrimaryProjects();
+  const experiments = getExperimentProjects();
 
   return (
     <MarketingShell currentPath="/work">
@@ -27,7 +22,6 @@ export default function WorkPage() {
         data={[
           createWebPageStructuredData("work"),
           createItemListStructuredData(),
-          ...softwareApps,
         ]}
       />
 
