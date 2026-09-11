@@ -6,6 +6,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## Verification and delivery
 
-- `npm run verify:fast` is the routine local and pull-request gate (lint and TypeScript checks).
+- `npm run verify:fast` is the routine local and pull-request gate (route type generation, lint, and TypeScript checks).
 - `npm run verify` adds the production build; `npm run verify:full` is the stable alias for the most complete available check.
 - Run the relevant verification before declaring work complete. Open a PR for Pete to review and merge; do not push directly to `master`.
