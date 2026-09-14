@@ -36,6 +36,9 @@ npm run dev
 - `npm run build` / `npm start` — production
 - `npm run lint` — ESLint
 - `npm run typecheck` — TypeScript
+- `npm run verify:fast` — typegen + lint + typecheck (routine gate)
+- `npm run verify` — verify:fast + production build
+- `npm run verify:full` — alias for `verify`
 
 ## Deploy (Coolify / Docker)
 
