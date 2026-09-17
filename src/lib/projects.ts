@@ -76,6 +76,24 @@ export const SCHOOL_REPORT_TENANTS: ProjectTenant[] = [
     domain: "schoolreports.nz",
     region: "New Zealand",
   },
+  {
+    name: "ZA School Reports",
+    url: "https://schoolreports.co.za",
+    domain: "schoolreports.co.za",
+    region: "South Africa",
+  },
+  {
+    name: "UK School Reports",
+    url: "https://schoolreports.co.uk",
+    domain: "schoolreports.co.uk",
+    region: "United Kingdom",
+  },
+  {
+    name: "Ontario School Reports",
+    url: "https://ontarioreportcomments.com",
+    domain: "ontarioreportcomments.com",
+    region: "Ontario, Canada",
+  },
 ];
 
 /**
@@ -113,10 +131,10 @@ export const PROJECTS: PortfolioProject[] = [
     name: "School Reports",
     domain: "multi-tenant codebase",
     description:
-      "AI report-comment generator for teachers. AI trained and curriculum-aligned for each Australian state and New Zealand.",
+      "AI report-comment generator for teachers, curriculum-aligned for each Australian state, New Zealand, South Africa, the UK and Canada.",
     status: "live",
     category: "Education",
-    region: "AU / NZ",
+    region: "AU / NZ / ZA / UK / CA",
     stack: ["Next.js", "Prisma", "Clerk", "Stripe", "OpenAI"],
     featured: true,
     tenants: SCHOOL_REPORT_TENANTS,
