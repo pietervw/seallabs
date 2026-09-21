@@ -70,24 +70,9 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
-  alternates: {
-    canonical: absoluteUrl("/"),
-  },
   openGraph: {
     type: "website",
     locale: SITE_LOCALE,
-    url: SITE_URL,
     siteName: SITE_NAME,
     title: `${SITE_NAME} | Software systems`,
     description: SITE_DESCRIPTION,

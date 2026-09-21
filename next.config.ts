@@ -32,6 +32,10 @@ const nextConfig: NextConfig = {
         headers: [...STATIC_ASSET_CACHE],
       },
       {
+        source: "/api/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
         source: "/(.*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
